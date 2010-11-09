@@ -1,0 +1,83 @@
+
+I really like irb_rocket, which outputs the evaluation result as comment and colorized errors. Unfortunately, the implementation leads to bugs, because it tries to run the whole command before printing anything to stdout. For this reason, I've rewritten it. It's not perfect, but it ...
+
+Features
+* Use fancy colors! You can colorize the prompts, irb errors, +stderr+ and +stdout+
+* Output results as Ruby comment #=> (rocket)
+* Define yourself, how to get the output value, using procs
+
+Usage
+
+  require 'fancy_irb'
+  FancyIrb.start
+
+You can pass an options hash. These are the default values:
+
+  default_options = {
+    :rocket_mode     => true,        # activate or deactivate #=> rocket output
+    :rocket_prompt   => '#=> ',      # prompt to use for the rocket
+    :result_prompt   => '=> ',       # prompt to use for normal output
+    :colorize => {                   # colors hash. Set to nil to deactivate colorizing
+      :rocket_prompt => :blue,
+      :result_prompt => nil,
+      :input_prompt  => nil,
+      :irb_errors    => :red,
+      :stderr        => :light_red,
+      :stdout        => :yellow,
+      :input         => nil,
+      :output        => true, # wirble's colorization
+    },
+    :result_proc     => default_result_proc,       # how to get the output result (see below)
+    :output_procs    => [default_colorizer_proc],  # you can filter/enhance/log your output
+  }
+
+==== Available colors
+  >> Wirble::Colorize::Color::COLORS.keys
+  => [:light_purple, :yellow, :light_gray, :white, :black, :dark_gray, :red, :green, :light_green, :brown, :light_blue, :light_red, :cyan, :blue, :light_cyan, :purple, :nothing]
+
+==== Output procs
+1234
+  the proc takes an IRB::Context object and should return the result string
+  FancyIrb.set_result_proc do |context|
+    if context.inspect?
+      context.last_value.inspect
+    else
+      context.last_value
+    end
+  end
+
+===== Default output procs
+...
+By default, there's only the colorizer proc ...
+
+== Example configurations
+
+=== No colorization
+  FancyIrb.start :colorize => nil
+
+=== Use awesome_print for inspecting
+  require 'ap'
+  FancyIrb.start :rocket_mode   => false,
+                 :colorize      => { :output => false,
+                                     :result_prompt => :yellow },
+                 :result_proc   => proc{ |context|
+                                    context.last_value.awesome_inspect
+                                   }
+=== Smileyfy output
+  FancyIrb.start
+  FancyIrb.add_output_proc do |value|
+    value + ' :)'
+  end
+
+== Digging further
+FancyIrb.options
+
+== Known bugs
+
+* if stdout of the current command scrolls, the rocket is displayed in the first terminal line
+
+Feel free to fix one ;)
+
+== Todos, maybe
+* lengths without colors
+* "always rocket"-mode
