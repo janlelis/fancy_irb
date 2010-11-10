@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Lelis"]
-  s.date = %q{2010-11-09}
-  s.description = %q{FncyIrb patches your IRB to create a smooth output experience.
+  s.date = %q{2010-11-10}
+  s.description = %q{FancyIrb patches your IRB to create a smooth output experience.
 * Use fancy colors! You can colorize the prompts, irb errors, +stderr+ and +stdout+
 * Output results as Ruby comment #=> (rocket)
 * Enhance your output value, using procs}
@@ -20,11 +20,12 @@ Gem::Specification.new do |s|
      "README"
   ]
   s.files = [
-    "LICENSE",
-     "README",
+    ".gitignore",
+     "LICENSE",
+     "README.rdoc",
      "Rakefile",
      "VERSION",
-     "fancy-irb.gemspec",
+     "fancy_irb.gemspec",
      "lib/fancy_irb.rb",
      "lib/fancy_irb/irb_ext.rb"
   ]
