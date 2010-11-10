@@ -1,12 +1,16 @@
+FancyIrb patches your IRB to create a smooth output experience.
 
-I really like irb_rocket, which outputs the evaluation result as comment and colorized errors. Unfortunately, the implementation leads to bugs, because it tries to run the whole command before printing anything to stdout. For this reason, I've rewritten it. It's not perfect, but it ...
-
-Features
+== Features
 * Use fancy colors! You can colorize the prompts, irb errors, +stderr+ and +stdout+
-* Output results as Ruby comment #=> (rocket)
-* Define yourself, how to get the output value, using procs
+* Output results as Ruby comment
+* Enhance your output value, using procs
 
-Usage
+== Motivation
+I really like the {irb_rocket}[https://github.com/genki/irb_rocket] gem, which outputs the evaluation result as comment and colorizes errors. Unfortunately, the implementation leads to bugs, because it tries to run the whole command before printing anything to +stdout+. For this reason, I've rewritten (and extended) it.
+
+This plugin is compatible with other great gems like {hirb}[https://github.com/cldwalker/hirb], {interactive_editor}[https://github.com/jberkel/interactive_editor], etc.
+
+== Usage
 
   require 'fancy_irb'
   FancyIrb.start
@@ -14,43 +18,60 @@ Usage
 You can pass an options hash. These are the default values:
 
   default_options = {
-    :rocket_mode     => true,        # activate or deactivate #=> rocket output
-    :rocket_prompt   => '#=> ',      # prompt to use for the rocket
-    :result_prompt   => '=> ',       # prompt to use for normal output
-    :colorize => {                   # colors hash. Set to nil to deactivate colorizing
+    :rocket_mode     => true,   # activate or deactivate #=> rocket output
+    :rocket_prompt   => '#=> ', # prompt to use for the rocket
+    :result_prompt   => '=> ',  # prompt to use for normal output
+    :colorize => {              # colors hash. Set to nil to deactivate colorizing
       :rocket_prompt => :blue,
-      :result_prompt => nil,
+      :result_prompt => :blue,
       :input_prompt  => nil,
       :irb_errors    => :red,
       :stderr        => :light_red,
-      :stdout        => :yellow,
+      :stdout        => :dark_gray,
       :input         => nil,
-      :output        => true, # wirble's colorization
-    },
+      :output        => true, # wirble's output colorization
+     },
     :result_proc     => default_result_proc,       # how to get the output result (see below)
-    :output_procs    => [default_colorizer_proc],  # you can filter/enhance/log your output
+    :output_procs    => [default_colorizer_proc],  # you can modify/enhance/log your output
   }
 
-==== Available colors
+=== Rocket mode
+
+Rocket mode means: Output result as comment if there is enough space left on the terminal line.
+
+=== Available colors
   >> Wirble::Colorize::Color::COLORS.keys
   => [:light_purple, :yellow, :light_gray, :white, :black, :dark_gray, :red, :green, :light_green, :brown, :light_blue, :light_red, :cyan, :blue, :light_cyan, :purple, :nothing]
 
-==== Output procs
-1234
-  the proc takes an IRB::Context object and should return the result string
-  FancyIrb.set_result_proc do |context|
+=== Modify your output
+
+You can modify how to get and display the input. The <tt>result_proc</tt> is a proc which takes the irb context object and should return the value. You can change it with <tt>FancyIrb.set_result_proc do (your code) end</tt>. After that, each proc in <tt>output_procs</tt> gets triggered. They take the value and can return a modified one. You can use the <tt>FancyIrb.add_output_proc</tt> method for adding new output filter procs.
+
+===== default_result_proc
+
+  default_result_proc = proc{ |context|
     if context.inspect?
       context.last_value.inspect
     else
       context.last_value
     end
-  end
+  }
 
-===== Default output procs
-...
-By default, there's only the colorizer proc ...
+===== default_colorizer_proc
+
+  default_colorizer_proc = proc{ |value|
+    FancyIrb.real_lengths[:output] =    value.size
+    if defined?(Wirble) && FancyIrb[:colorize, :output]
+      Wirble::Colorize.colorize value
+    else
+      value 
+    end
+  }
 
 == Example configurations
+
+=== Default
+  FancyIrb.start
 
 === No colorization
   FancyIrb.start :colorize => nil
@@ -63,21 +84,31 @@ By default, there's only the colorizer proc ...
                  :result_proc   => proc{ |context|
                                     context.last_value.awesome_inspect
                                    }
+
 === Smileyfy output
   FancyIrb.start
   FancyIrb.add_output_proc do |value|
     value + ' :)'
   end
 
-== Digging further
-FancyIrb.options
+== TODO
+=== Known bugs
+* If stdout of the current command scrolls, the rocket is displayed not higher than the first terminal line
+* Something is wrong with input-newline when colorizing input
+* Not all input methods are patched properly (to work with the rocket) --> focusing on the often used ones
 
-== Known bugs
+=== Features, maybe
+* Count string lengths without ansi escape sequences (would be more flexible than remembering)
+* "Always rocket"-mode
+* Allow custom ansi escape strings
+* Refactor some code duplications
 
-* if stdout of the current command scrolls, the rocket is displayed in the first terminal line
+Feel free to fix a bug or implement a todo ;)
 
-Feel free to fix one ;)
+== Copyright / Credits
 
-== Todos, maybe
-* lengths without colors
-* "always rocket"-mode
+Inspired by the irb_rocket gem from genki.
+
+Copyright (c) 2010 Jan Lelis, http://rbjl.net, released under the MIT license.
+
+J-_-L

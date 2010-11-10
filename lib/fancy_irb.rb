@@ -1,7 +1,11 @@
 require 'stringio'
 require 'wirble'
 
-class << FancyIrb = Module.new
+module FancyIrb
+  VERSION = ( File.read File.expand_path( '../VERSION', File.dirname(__FILE__)) ).chomp
+end
+
+class << FancyIrb
   # setup instance variable accessors
   attr_reader :options
   def [](key, key2 = nil)
@@ -18,11 +22,12 @@ class << FancyIrb = Module.new
   attr_accessor :stdout_colorful
 
   def start(user_options = {})
+    # track some irb stuff
     @height_counter = []
     @real_lengths = { :output => 1, :input_prompt => 9999 } # or whatever
     @stdout_colorful = false
 
-    # set default and parse user options
+    # set defaults and parse user options
     default_result_proc = proc{ |context|
       if context.inspect?
         context.last_value.inspect
@@ -41,29 +46,21 @@ class << FancyIrb = Module.new
     }
 
     default_options = {
-      :rocket_mode     => true,
-      :rocket_prompt   => '#=> ',
-      :result_prompt   => '=> ',
-      :colorize => {
-        :rocket_prompt => nil,
-        :result_prompt => nil,
+      :rocket_mode     => true,   # activate or deactivate #=> rocket output
+      :rocket_prompt   => '#=> ', # prompt to use for the rocket
+      :result_prompt   => '=> ',  # prompt to use for normal output
+      :colorize => {              # colors hash. Set to nil to deactivate colorizing
+        :rocket_prompt => :blue,
+        :result_prompt => :blue,
         :input_prompt  => nil,
-        :irb_errors    => nil,
-        :stderr        => nil,
-        :stdout        => nil,
-        :input         => :red,
-        :output        => nil, # wirble's colorization
-#        :rocket_prompt => :blue,
-#        :result_prompt => nil,
-#        :input_prompt  => nil,
-#        :irb_errors    => :red,
-#        :stderr        => :light_red,
-#        :stdout        => :yellow,
-#        :input         => nil,
-#        :output        => true, # wirble's colorization
+        :irb_errors    => :red,
+        :stderr        => :light_red,
+        :stdout        => :dark_gray,
+        :input         => nil,
+        :output        => true, # wirble's output colorization
        },
-      :result_proc     => default_result_proc,
-      :output_procs    => [default_colorizer_proc],
+      :result_proc     => default_result_proc,       # how to get the output result
+      :output_procs    => [default_colorizer_proc],  # you can modify/enhance/log your output
     }
 
     @options = default_options
@@ -86,7 +83,7 @@ class << FancyIrb = Module.new
     }
 
     # hook code into IRB
-    require './fancy_irb/irb_ext' #TODO
+    require 'fancy_irb/irb_ext'
 
     "Enjoy your FancyIrb :)"
   end
@@ -124,8 +121,3 @@ class << FancyIrb = Module.new
     )
   end
 end
-
-FancyIrb.start
-
-# gets height bug
-# wrong input colorization bug

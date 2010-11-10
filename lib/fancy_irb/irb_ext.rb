@@ -25,6 +25,9 @@ module IRB
           formatter[ output ].to_s
         }
 
+      # reset color
+      print Wirble::Colorize::Color.escape( :nothing ) 
+
       # try to output in rocket mode (depending on rocket_mode setting)
       if FancyIrb[:rocket_mode]
         # get lengths
@@ -54,14 +57,17 @@ module IRB
     # colorize prompt & input
     alias prompt_non_fancy prompt
     def prompt(*args, &block)
+      print Wirble::Colorize::Color.escape(:nothing)
+
       prompt = prompt_non_fancy(*args, &block)
       FancyIrb.real_lengths[:input_prompt] = prompt.size
       colorized_prompt = colorize prompt, FancyIrb[:colorize, :input_prompt]
-      #if input_color = FancyIrb[:colorize, :input]
-      #  colorized_prompt + Wirble::Colorize::Color.escape( input_color )  # NOTE: No reset, relies on next one TODO
-      #else
+      if input_color = FancyIrb[:colorize, :input]
+        colorized_prompt + Wirble::Colorize::Color.escape( input_color )  # NOTE: No reset, relies on next one
+                                                                          # TODO buggy
+      else
         colorized_prompt
-      #end
+      end
     end
 
     # track height and capture irb errors (part 2)
@@ -103,7 +109,7 @@ module IRB
   end
 end
 
-# TODO  
+# hook into streams to count lines and colorize
 class << $stdout
   alias write_non_fancy write
   def write(data)
@@ -121,3 +127,37 @@ class << $stderr
     write_non_fancy data
   end
 end
+
+
+# patch some input methods to track height
+alias gets_non_fancy gets
+def gets(*args)
+  res = gets_non_fancy *args
+  FancyIrb.track_height res
+  res
+end
+
+# TODO testing and improving, e.g. getc does not contain "\n"
+class << $stdin
+  stdin_hooks = %w[binread read gets getc getbyte readbyte readchar readline readlines readpartial sysread]
+  # TODO: each_byte, each_char, each_codepoint, each
+
+  stdin_hooks.each{ |m|
+    msym   = m.to_sym
+    malias = (m+'_non_fancy').to_sym
+
+    if $stdin.respond_to? msym
+      alias_method malias, msym
+      define_method msym do |*args|
+        res = send malias, *args
+        FancyIrb.track_height res
+        res
+      end
+    end
+  }
+end
+
+# reset everything (e.g. colors) when exiting
+END{
+  print `tput sgr0`
+}
