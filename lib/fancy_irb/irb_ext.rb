@@ -35,12 +35,15 @@ module IRB
         last_line_without_prompt = last_input.split("\n").last
         offset = last_line_without_prompt.size + FancyIrb.real_lengths[:input_prompt] + 1
         screen_length = `tput cols`.to_i
+        screen_lines = `tput lines`.to_i
         output_length = FancyIrb.real_lengths[:output]
         rocket_length = FancyIrb[:rocket_prompt].size
         stdout_lines  = FancyIrb.get_height
 
         # auto rocket mode
-        if FancyIrb[:rocket_mode] && screen_length > offset + rocket_length + output_length
+        if FancyIrb[:rocket_mode] &&
+            screen_length > offset + rocket_length + output_length &&
+            stdout_lines < screen_lines
           print `tput sc` +                # save current cursor position
                 `tput cuu1`*stdout_lines + # move cursor upwards    to the original input line
                 `tput cuf1`*offset +       # move cursor rightwards to the original input offset
