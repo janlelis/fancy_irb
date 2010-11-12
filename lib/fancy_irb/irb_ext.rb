@@ -58,9 +58,14 @@ module IRB
     alias prompt_non_fancy prompt
     def prompt(*args, &block)
       print Wirble::Colorize::Color.escape(:nothing)
-
       prompt = prompt_non_fancy(*args, &block)
-      FancyIrb.real_lengths[:input_prompt] = prompt.size + @scanner.indent*2
+
+      # this is kinda hacky... but that's irb °_°
+      indents = @scanner.indent*2
+      FancyIrb.continue = true if args[0] == IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C]
+      indents += 2 if FancyIrb.continue
+      FancyIrb.real_lengths[:input_prompt] = prompt.size + indents
+      
       colorized_prompt = colorize prompt, FancyIrb[:colorize, :input_prompt]
       if input_color = FancyIrb[:colorize, :input]
         colorized_prompt + Wirble::Colorize::Color.escape( input_color )  # NOTE: No reset, relies on next one
@@ -73,6 +78,7 @@ module IRB
     # track height and capture irb errors (part 2)
     alias signal_status_non_fancy signal_status
     def signal_status(name, *args, &block)
+      FancyIrb.continue = false
       FancyIrb.reset_height
       signal_status_non_fancy(name, *args, &block)
     ensure

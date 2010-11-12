@@ -19,13 +19,15 @@ class << FancyIrb
   attr_accessor :original_stdout
   attr_accessor :capture_irb_errors
   attr_accessor :real_lengths
+  attr_accessor :continue
   attr_accessor :stdout_colorful
 
   def start(user_options = {})
     # track some irb stuff
-    @height_counter = []
-    @real_lengths = { :output => 1, :input_prompt => 9999 } # or whatever
+    @height_counter  = []
+    @real_lengths    = { :output => 1, :input_prompt => 9999 } # or whatever
     @stdout_colorful = false
+    @continue        = false
 
     # set defaults and parse user options
     default_result_proc = proc{ |context|
