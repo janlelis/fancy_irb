@@ -2,8 +2,8 @@ FancyIrb patches your IRB to create a smooth output experience.
 
 == Features
 * Use fancy colors! You can colorize the prompts, irb errors, +stderr+ and +stdout+
-* Output results as Ruby comment
-* Enhance your output value, using procs
+* Output evaluation results as Ruby comments
+* Enhance your output value using procs
 
 == Motivation
 I really like the {irb_rocket}[https://github.com/genki/irb_rocket] gem, which outputs the evaluation result as comment and colorizes errors. Unfortunately, the implementation leads to bugs, because it tries to run the whole command before printing anything to +stdout+. For this reason, I've rewritten (and extended) it.
@@ -37,7 +37,7 @@ You can pass an options hash. These are the default values:
 
 === Rocket mode
 
-Rocket mode means: Output result as comment if there is enough space left on the terminal line.
+Rocket mode means: Output result as comment if there is enough space left on the terminal line and +stdout+ does not output more than the current terminal height.
 
 === Available colors
   >> Wirble::Colorize::Color::COLORS.keys
@@ -93,14 +93,13 @@ You can modify how to get and display the input. The <tt>result_proc</tt> is a p
 
 == TODO
 === Known bugs
-* If stdout of the current command scrolls, the rocket is displayed not higher than the first terminal line
 * Something is wrong with input-newline when colorizing input
 * Not all input methods are patched properly (to work with the rocket) --> focusing on the often used ones
 
 === Features, maybe
 * Count string lengths without ansi escape sequences (would be more flexible than remembering)
 * "Always rocket"-mode
-* Allow custom ansi escape strings
+* Allow custom ansi escape strings instead of wirble's colors
 * Refactor some code duplications
 
 Feel free to fix a bug or implement a todo ;)

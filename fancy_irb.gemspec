@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.email = %q{mail@janlelis.de}
   s.extra_rdoc_files = [
     "LICENSE",
-     "README"
+     "README.rdoc"
   ]
   s.files = [
     ".gitignore",
