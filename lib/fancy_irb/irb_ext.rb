@@ -60,7 +60,7 @@ module IRB
       print Wirble::Colorize::Color.escape(:nothing)
 
       prompt = prompt_non_fancy(*args, &block)
-      FancyIrb.real_lengths[:input_prompt] = prompt.size
+      FancyIrb.real_lengths[:input_prompt] = prompt.size + @scanner.indent*2
       colorized_prompt = colorize prompt, FancyIrb[:colorize, :input_prompt]
       if input_color = FancyIrb[:colorize, :input]
         colorized_prompt + Wirble::Colorize::Color.escape( input_color )  # NOTE: No reset, relies on next one
