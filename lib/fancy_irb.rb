@@ -106,7 +106,9 @@ class << FancyIrb
   def track_height(data)
     lines      = data.to_s.count("\n")
     long_lines = data.to_s.split("\n").inject(0){ |sum, line|
-      line_size = (RUBY_VERSION[2] == ?8) ? line.unpack('U*').size : line.size
+      line_size = line.chars.inject(0) do |mem, chr|
+        mem + ((chr.bytesize rescue chr.size) > 1 ? 2 : 1)
+      end
       sum + (line_size / `tput cols`.to_i)
     }
     @height_counter << lines + long_lines
