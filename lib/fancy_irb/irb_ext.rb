@@ -1,5 +1,12 @@
 module IRB
   class Irb
+    TPUT = {
+      :sc   => `tput sc`,
+      :rc   => `tput rc`,
+      :cuu1 => `tput cuu1`,
+      :cuf1 => `tput cuf1`,
+    }
+
     def colorize(string, color)
       if defined?(Wirble) && color && color_string = Wirble::Colorize::Color.escape( color.to_sym )
         color_string + string.to_s + Wirble::Colorize::Color.escape( :nothing )
@@ -44,12 +51,12 @@ module IRB
         if FancyIrb[:rocket_mode] &&
             screen_length > offset + rocket_length + output_length &&
             stdout_lines < screen_lines
-          print `tput sc` +                # save current cursor position
-                `tput cuu1`*stdout_lines + # move cursor upwards    to the original input line
-                `tput cuf1`*offset +       # move cursor rightwards to the original input offset
+          print TPUT[:sc] +                # save current cursor position
+                TPUT[:cuu1]*stdout_lines + # move cursor upwards    to the original input line
+                TPUT[:cuf1]*offset +       # move cursor rightwards to the original input offset
                 rocket +                   # draw rocket prompt
                 output +                   # draw output
-                `tput rc`                  # return to normal cursor position
+                TPUT[:rc]                  # return to normal cursor position
           return
         end
       end
