@@ -33,7 +33,7 @@ module IRB
         # get lengths
         last_input               = @scanner.instance_variable_get( :@line )
         last_line_without_prompt = last_input.split("\n").last
-        offset = last_line_without_prompt.size + FancyIrb.real_lengths[:input_prompt] + 1
+        offset = last_line_without_prompt.display_size + FancyIrb.real_lengths[:input_prompt] + 1
         screen_length = `tput cols`.to_i
         screen_lines = `tput lines`.to_i
         output_length = FancyIrb.real_lengths[:output]

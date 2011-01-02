@@ -108,6 +108,6 @@ Feel free to fix a bug or implement a todo ;)
 
 Inspired by the irb_rocket gem from genki.
 
-Copyright (c) 2010 Jan Lelis, http://rbjl.net, released under the MIT license.
+Copyright (c) 2010-2011 Jan Lelis, http://rbjl.net, released under the MIT license.
 
 J-_-L

@@ -1,5 +1,6 @@
 require 'stringio'
 require 'wirble'
+require 'unicode/display_width'
 
 module FancyIrb
   VERSION = ( File.read File.expand_path( '../VERSION', File.dirname(__FILE__)) ).chomp
@@ -106,8 +107,7 @@ class << FancyIrb
   def track_height(data)
     lines      = data.to_s.count("\n")
     long_lines = data.to_s.split("\n").inject(0){ |sum, line|
-      line_size = (RUBY_VERSION[2] == ?8) ? line.unpack('U*').size : line.size
-      sum + (line_size / `tput cols`.to_i)
+      sum + (line.display_size / `tput cols`.to_i)
     }
     @height_counter << lines + long_lines
   end
