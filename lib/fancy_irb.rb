@@ -1,6 +1,5 @@
 require 'stringio'
-require 'wirble'
-require 'unicode/display_width'
+require 'wirb'
 
 module FancyIrb
   VERSION = ( File.read File.expand_path( '../VERSION', File.dirname(__FILE__)) ).chomp
@@ -41,8 +40,8 @@ class << FancyIrb
 
     default_colorizer_proc = proc{ |value|
       FancyIrb.real_lengths[:output] =    value.size
-      if defined?(Wirble) && FancyIrb[:colorize, :output]
-        Wirble::Colorize.colorize value
+      if defined?(Wirb) && FancyIrb[:colorize, :output]
+        Wirb.colorize_result value
       else
         value 
       end
@@ -60,10 +59,11 @@ class << FancyIrb
         :stderr        => :light_red,
         :stdout        => :dark_gray,
         :input         => nil,
-        :output        => true, # wirble's output colorization
+        :output        => true, # wirb's output colorization
        },
       :result_proc     => default_result_proc,       # how to get the output result
       :output_procs    => [default_colorizer_proc],  # you can modify/enhance/log your output
+      :east_asian_width => false, # set to true if you have double-width characters (slower)
     }
 
     @options = default_options
@@ -118,8 +118,8 @@ class << FancyIrb
 
   def write_stream(stream, data, color = nil)
     stream.write_non_fancy(
-      if defined?(Wirble) && FancyIrb.stdout_colorful && color
-        Wirble::Colorize::Color.escape( color ) + data.to_s + Wirble::Colorize::Color.escape(:nothing)
+      if defined?(Wirb) && FancyIrb.stdout_colorful && color
+        Wirb.colorize_string data.to_s, color
       else
         data.to_s
       end

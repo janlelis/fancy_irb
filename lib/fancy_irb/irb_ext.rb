@@ -1,3 +1,11 @@
+if FancyIrb[:east_asian_width]
+  require 'unicode/display_size'
+else
+  class String
+    alias display_size size
+  end
+end
+
 module IRB
   class Irb
     TPUT = {
@@ -8,8 +16,8 @@ module IRB
     }
 
     def colorize(string, color)
-      if defined?(Wirble) && color && color_string = Wirble::Colorize::Color.escape( color.to_sym )
-        color_string + string.to_s + Wirble::Colorize::Color.escape( :nothing )
+      if defined?(::Wirb) && color
+        ::Wirb.colorize_string string.to_s, color.to_sym
       else
       #  if defined? Wirble
       #    Wirble::Colorize::Color.escape( :nothing ) + string.to_s
@@ -33,7 +41,7 @@ module IRB
         }
 
       # reset color
-      print Wirble::Colorize::Color.escape( :nothing ) 
+      print ::Wirb.get_color( :nothing ) 
 
       # try to output in rocket mode (depending on rocket_mode setting)
       if FancyIrb[:rocket_mode]
@@ -67,7 +75,7 @@ module IRB
     # colorize prompt & input
     alias prompt_non_fancy prompt
     def prompt(*args, &block)
-      print Wirble::Colorize::Color.escape(:nothing)
+      print ::Wirb.get_color(:nothing)
       prompt = prompt_non_fancy(*args, &block)
 
       # this is kinda hacky... but that's irb °_°
@@ -78,8 +86,8 @@ module IRB
       
       colorized_prompt = colorize prompt, FancyIrb[:colorize, :input_prompt]
       if input_color = FancyIrb[:colorize, :input]
-        colorized_prompt + Wirble::Colorize::Color.escape( input_color )  # NOTE: No reset, relies on next one
-                                                                          # TODO buggy
+        colorized_prompt + ::Wirb.get_color( input_color )  # NOTE: No reset, relies on next one
+                                                            # TODO buggy
       else
         colorized_prompt
       end
@@ -177,3 +185,5 @@ end
 END{
   print `tput sgr0`
 }
+
+# J-_-L

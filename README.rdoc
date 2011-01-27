@@ -29,19 +29,21 @@ You can pass an options hash. These are the default values:
       :stderr        => :light_red,
       :stdout        => :dark_gray,
       :input         => nil,
-      :output        => true, # wirble's output colorization
+      :output        => true, # wirb's output colorization
      },
     :result_proc     => default_result_proc,       # how to get the output result (see below)
     :output_procs    => [default_colorizer_proc],  # you can modify/enhance/log your output
+    :east_asian_width => false, # set to true if you have double-width characters (slower)
   }
 
 === Rocket mode
-
 Rocket mode means: Output result as comment if there is enough space left on the terminal line and +stdout+ does not output more than the current terminal height.
 
+=== Wrong display widths?
+When using double-width unicode chars, you should set <tt>:east_asian_width</tt> to <tt>true</tt>. It is deactivated because of performance issues.
+
 === Available colors
-  >> Wirble::Colorize::Color::COLORS.keys
-  => [:light_purple, :yellow, :light_gray, :white, :black, :dark_gray, :red, :green, :light_green, :brown, :light_blue, :light_red, :cyan, :blue, :light_cyan, :purple, :nothing]
+  See <tt>Wirb::COLORS.keys</tt>
 
 === Modify your output
 
@@ -61,8 +63,8 @@ You can modify how to get and display the input. The <tt>result_proc</tt> is a p
 
   default_colorizer_proc = proc{ |value|
     FancyIrb.real_lengths[:output] =    value.size
-    if defined?(Wirble) && FancyIrb[:colorize, :output]
-      Wirble::Colorize.colorize value
+    if defined?(Wirb) && FancyIrb[:colorize, :output]
+      Wirb.colorize_result value
     else
       value 
     end
@@ -82,7 +84,7 @@ You can modify how to get and display the input. The <tt>result_proc</tt> is a p
                  :colorize      => { :output => false,
                                      :result_prompt => :yellow },
                  :result_proc   => proc{ |context|
-                                    context.last_value.awesome_inspect
+                                     context.last_value.awesome_inspect
                                    }
 
 === Smileyfy output
@@ -99,8 +101,6 @@ You can modify how to get and display the input. The <tt>result_proc</tt> is a p
 === Features, maybe
 * Count string lengths without ansi escape sequences (would be more flexible than remembering)
 * "Always rocket"-mode
-* Allow custom ansi escape strings instead of wirble's colors
-* Refactor some code duplications
 
 Feel free to fix a bug or implement a todo ;)
 
@@ -108,6 +108,6 @@ Feel free to fix a bug or implement a todo ;)
 
 Inspired by the irb_rocket gem from genki.
 
-Copyright (c) 2010-2011 Jan Lelis, http://rbjl.net, released under the MIT license.
+Copyright (c) 2010-2011 Jan Lelis <http://rbjl.net> released under the MIT license.
 
 J-_-L

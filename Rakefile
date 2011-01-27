@@ -1,25 +1,34 @@
 require 'rubygems'
 require 'rake'
+require 'rake/rdoctask'
+require 'fileutils'
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "fancy_irb"
-    gem.summary = %q{FancyIrb patches your IRB to create a smooth output experience.}
-    gem.description = %q{FancyIrb patches your IRB to create a smooth output experience.
-* Use fancy colors! You can colorize the prompts, irb errors, stderr and stdout
-* Output results as Ruby comment #=> (rocket)
-* Enhance your output value, using procs}
-    gem.email = "mail@janlelis.de"
-    gem.homepage = "http://github.com/janlelis/fancy_irb"
-    gem.authors = ["Jan Lelis"]
-    gem.add_dependency 'wirble'
-    gem.add_dependency 'unicode-display_width'
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
+def gemspec
+  @gemspec ||= eval(File.read('fancy_irb.gemspec'), binding, 'fancy_irb.gemspec')
 end
+
+desc "Build the gem"
+task :gem => :gemspec do
+  sh "gem build fancy_irb.gemspec"
+  FileUtils.mkdir_p 'pkg'
+  FileUtils.mv "#{gemspec.name}-#{gemspec.version}.gem", 'pkg'
+end
+
+desc "Install the gem locally (without docs)"
+task :install => :gem do
+  sh %{gem install pkg/#{gemspec.name}-#{gemspec.version} --no-rdoc --no-ri}
+end
+
+desc "Generate the gemspec"
+task :generate do
+  puts gemspec.to_ruby
+end
+
+desc "Validate the gemspec"
+task :gemspec do
+  gemspec.validate
+end
+
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
