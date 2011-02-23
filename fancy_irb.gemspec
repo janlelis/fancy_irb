@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   #s.files = Dir.glob(%w[{lib,test}/**/*.rb bin/* [A-Z]*.{txt,rdoc} ext/**/*.{rb,c} **/deps.rip]) + %w{Rakefile .gemspec}
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
   s.license = 'MIT'
+  s.requirements = ['On Windows, you need ansicon: https://github.com/adoxa/ansicon']
   s.add_dependency('wirb', '>= 0')
   s.add_dependency('unicode-display_width', ">= 0")
   s.files = [

@@ -107,7 +107,7 @@ class << FancyIrb
   def track_height(data)
     lines      = data.to_s.count("\n")
     long_lines = data.to_s.split("\n").inject(0){ |sum, line|
-      sum + (line.display_size / `tput cols`.to_i)
+      sum + (line.display_size / current_length)
     }
     @height_counter << lines + long_lines
   end
@@ -124,5 +124,28 @@ class << FancyIrb
         data.to_s
       end
     )
+  end
+
+  def win?
+    RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
+  end
+
+  if FancyIrb.win? 
+    raise LoadError, 'FancyIrb needs ansicon on windows, see https://github.com/adoxa/ansicon' unless ENV['ANSICON']
+    def current_length
+       ENV['ANSICON'][/\((.*)x/, 1].to_i
+    end
+
+    def current_lines
+       ENV['ANSICON'][/\(.*x(.*)\)/, 1].to_i
+    end
+  else
+    def current_length
+     `tput cols`.to_i
+    end
+
+    def current_lines
+     `tput lines`.to_i
+    end
   end
 end

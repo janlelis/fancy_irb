@@ -70,6 +70,10 @@ You can modify how to get and display the input. The <tt>result_proc</tt> is a p
     end
   }
 
+== FancyIrb on Windows?
+
+You need ansicon[https://github.com/adoxa/ansicon] and everything will be fine :D
+
 == Example configurations
 
 === Default

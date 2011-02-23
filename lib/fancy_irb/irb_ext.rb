@@ -8,12 +8,21 @@ end
 
 module IRB
   class Irb
-    TPUT = {
-      :sc   => `tput sc`,
-      :rc   => `tput rc`,
-      :cuu1 => `tput cuu1`,
-      :cuf1 => `tput cuf1`,
-    }
+    if FancyIrb.win?
+      TPUT = {
+        :sc   => "\e[s",
+        :rc   => "\e[u",
+        :cuu1 => "\e[1A",
+        :cuf1 => "\e[1C",
+      }
+    else
+      TPUT = {
+        :sc   => `tput sc`,
+        :rc   => `tput rc`,
+        :cuu1 => `tput cuu1`,
+        :cuf1 => `tput cuf1`,
+      }
+    end
 
     def colorize(string, color)
       if defined?(::Wirb) && color
@@ -49,8 +58,8 @@ module IRB
         last_input               = @scanner.instance_variable_get( :@line )
         last_line_without_prompt = last_input.split("\n").last
         offset = last_line_without_prompt.display_size + FancyIrb.real_lengths[:input_prompt] + 1
-        screen_length = `tput cols`.to_i
-        screen_lines = `tput lines`.to_i
+        screen_length = FancyIrb.current_length
+        screen_lines  = FancyIrb.current_lines
         output_length = FancyIrb.real_lengths[:output]
         rocket_length = FancyIrb[:rocket_prompt].size
         stdout_lines  = FancyIrb.get_height
@@ -181,9 +190,6 @@ class << $stdin
   }
 end
 
-# reset everything (e.g. colors) when exiting
-END{
-  print `tput sgr0`
-}
+END{ print "\e[0;0m" } # reset colors when exiting
 
 # J-_-L
