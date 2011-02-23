@@ -15,13 +15,14 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
   s.license = 'MIT'
   s.requirements = ['On Windows, you need ansicon: https://github.com/adoxa/ansicon']
-  s.add_dependency('wirb', '>= 0')
-  s.add_dependency('unicode-display_width', ">= 0")
+  s.add_dependency('wirb', '>= 0.2.4')
+  s.add_dependency('unicode-display_width', ">= 0.1.1")
   s.files = [
     "LICENSE",
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "CHANGELOG.rdoc",
     "fancy_irb.gemspec",
     "lib/fancy_irb.rb",
     "lib/fancy_irb/irb_ext.rb"
