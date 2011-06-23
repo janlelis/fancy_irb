@@ -27,5 +27,14 @@ Gem::Specification.new do |s|
     "lib/fancy_irb.rb",
     "lib/fancy_irb/irb_ext.rb"
   ]
+
+  len = s.homepage.size
+  s.post_install_message = \
+   ("       ┌── " + "info ".ljust(len-2,'%')              + "─┐\n" +
+    " J-_-L │ "   + s.homepage                            + " │\n" +
+    "       ├── " + "usage ".ljust(len-2,'%')             + "─┤\n" +
+    "       │ "   + "require 'fancy_irb'".ljust(len,' ')  + " │\n" +
+    "       │ "   + "FancyIrb.start".ljust(len,' ')       + " │\n" +
+    "       └─"   + '─'*len                               + "─┘").gsub('%', '─') # 1.8 workaround
 end
 
