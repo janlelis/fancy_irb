@@ -25,15 +25,7 @@ module IRB
     end
 
     def colorize(string, color)
-      if defined?(::Wirb) && color
-        ::Wirb.colorize_string string.to_s, color.to_sym
-      else
-      #  if defined? Wirble
-      #    Wirble::Colorize::Color.escape( :nothing ) + string.to_s
-      #  else
-          string.to_s
-      #  end
-      end
+      Paint[string, *Array(color)]
     end
 
     def output_value
@@ -50,7 +42,7 @@ module IRB
         }
 
       # reset color
-      print ::Wirb.get_color( :nothing ) 
+      print Paint::NOTHING
 
       # try to output in rocket mode (depending on rocket_mode setting)
       if FancyIrb[:rocket_mode]
@@ -84,7 +76,7 @@ module IRB
     # colorize prompt & input
     alias prompt_non_fancy prompt
     def prompt(*args, &block)
-      print ::Wirb.get_color(:nothing)
+      print Paint::NOTHING
       prompt = prompt_non_fancy(*args, &block)
 
       # this is kinda hacky... but that's irb °_°
@@ -95,8 +87,8 @@ module IRB
       
       colorized_prompt = colorize prompt, FancyIrb[:colorize, :input_prompt]
       if input_color = FancyIrb[:colorize, :input]
-        colorized_prompt + ::Wirb.get_color( input_color )  # NOTE: No reset, relies on next one
-                                                            # TODO buggy
+        colorized_prompt + Paint.color(input_color) # NOTE: No reset, relies on next one
+                                                    # TODO buggy
       else
         colorized_prompt
       end
@@ -190,6 +182,6 @@ class << $stdin
   }
 end
 
-END{ print "\e[0;0m" } # reset colors when exiting
+END{ print "\e[0m" } # reset colors when exiting
 
 # J-_-L

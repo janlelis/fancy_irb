@@ -1,3 +1,7 @@
+== next (0.7.0)
+* Use paint gem for terminal colors
+* Fix some rocket issues (when using with colored content)
+
 == 0.6.5
 * Windows support
 

@@ -1,5 +1,5 @@
 require 'stringio'
-require 'wirb'
+require 'paint'
 
 module FancyIrb
   VERSION = ( File.read File.expand_path( '../VERSION', File.dirname(__FILE__)) ).chomp
@@ -56,8 +56,8 @@ class << FancyIrb
         :result_prompt => :blue,
         :input_prompt  => nil,
         :irb_errors    => :red,
-        :stderr        => :light_red,
-        :stdout        => :dark_gray,
+        :stderr        => [:red, :bright],
+        :stdout        => [:black, :bright],
         :input         => nil,
         :output        => true, # wirb's output colorization
        },
@@ -105,8 +105,9 @@ class << FancyIrb
   end
 
   def track_height(data)
-    lines      = data.to_s.count("\n")
-    long_lines = data.to_s.split("\n").inject(0){ |sum, line|
+    data       = Paint.unpaint(data.to_s)
+    lines      = data.count("\n")
+    long_lines = data.split("\n").inject(0){ |sum, line|
       sum + (line.display_size / current_length)
     }
     @height_counter << lines + long_lines
@@ -117,13 +118,7 @@ class << FancyIrb
   end
 
   def write_stream(stream, data, color = nil)
-    stream.write_non_fancy(
-      if defined?(Wirb) && FancyIrb.stdout_colorful && color
-        Wirb.colorize_string data.to_s, color
-      else
-        data.to_s
-      end
-    )
+    stream.write_non_fancy( FancyIrb.stdout_colorful ? Paint[data, *Array(color)] : data.to_s )
   end
 
   def win?

@@ -5,6 +5,10 @@ FancyIrb patches your IRB to create a smooth output experience.
 * Output evaluation results as Ruby comments
 * Enhance your output value using procs
 
+== Next version: Gem release using Paint[https://github.com/janlelis/paint] and some refactorings
+
+...around the first wednesday of july.
+
 == Motivation
 I really like the {irb_rocket}[https://github.com/genki/irb_rocket] gem, which outputs the evaluation result as comment and colorizes errors. Unfortunately, the implementation leads to bugs, because it tries to run the whole command before printing anything to +stdout+. For this reason, I've rewritten (and extended) it.
 
