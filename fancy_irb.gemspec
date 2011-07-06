@@ -3,7 +3,7 @@ require 'rubygems' unless defined? Gem
  
 Gem::Specification.new do |s|
   s.name        = "fancy_irb"
-  s.version     = File.exist?('VERSION') ? File.read('VERSION').chomp : ""
+  s.version     = File.read('VERSION').chomp
   s.authors     = ["Jan Lelis"]
   s.email       = "mail@janlelis.de"
   s.homepage    = "http://github.com/janlelis/fancy_irb"

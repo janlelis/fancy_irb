@@ -5,12 +5,8 @@ FancyIrb patches your IRB to create a smooth output experience.
 * Output evaluation results as Ruby comments
 * Enhance your output value using procs
 
-== Next version: Gem release using Paint[https://github.com/janlelis/paint] and some refactorings
-
-...around the first wednesday of july.
-
 == Motivation
-I really like the {irb_rocket}[https://github.com/genki/irb_rocket] gem, which outputs the evaluation result as comment and colorizes errors. Unfortunately, the implementation leads to bugs, because it tries to run the whole command before printing anything to +stdout+. For this reason, I've rewritten (and extended) it.
+I really like the {irb_rocket}[https://github.com/genki/irb_rocket] gem, which outputs Ruby results as hash rocket and colorizes errors. Unfortunately, the implementation leads to bugs, because it tries to run the whole command before printing anything to +stdout+. For this reason, I've rewritten (and extended) it.
 
 This plugin is compatible with other great gems like {hirb}[https://github.com/cldwalker/hirb], {interactive_editor}[https://github.com/jberkel/interactive_editor], etc.
 
@@ -26,12 +22,12 @@ You can pass an options hash. These are the default values:
     :rocket_prompt   => '#=> ', # prompt to use for the rocket
     :result_prompt   => '=> ',  # prompt to use for normal output
     :colorize => {              # colors hash. Set to nil to deactivate colorizing
-      :rocket_prompt => :blue,
-      :result_prompt => :blue,
+      :rocket_prompt => [:blue],
+      :result_prompt => [:blue],
       :input_prompt  => nil,
-      :irb_errors    => :red,
-      :stderr        => :light_red,
-      :stdout        => :dark_gray,
+      :irb_errors    => [:red],
+      :stderr        => [:red, :bright],
+      :stdout        => [:black, :bright],
       :input         => nil,
       :output        => true, # wirb's output colorization
      },
@@ -46,11 +42,10 @@ Rocket mode means: Output result as comment if there is enough space left on the
 === Wrong display widths?
 When using double-width unicode chars, you should set <tt>:east_asian_width</tt> to <tt>true</tt>. It is deactivated because of performance issues.
 
-=== Available colors
-  See <tt>Wirb::COLORS.keys</tt>
+=== Customize colors
+  See paint[https://github.com/janlelis/paint]
 
-=== Modify your output
-
+=== Modify your IRB output
 You can modify how to get and display the input. The <tt>result_proc</tt> is a proc which takes the irb context object and should return the value. You can change it with <tt>FancyIrb.set_result_proc do (your code) end</tt>. After that, each proc in <tt>output_procs</tt> gets triggered. They take the value and can return a modified one. You can use the <tt>FancyIrb.add_output_proc</tt> method for adding new output filter procs.
 
 ===== default_result_proc

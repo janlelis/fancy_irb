@@ -84,11 +84,10 @@ module IRB
       FancyIrb.continue = true if args[0] == IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C]
       indents += 2 if FancyIrb.continue
       FancyIrb.real_lengths[:input_prompt] = prompt.size + indents
-      
+     
       colorized_prompt = colorize prompt, FancyIrb[:colorize, :input_prompt]
       if input_color = FancyIrb[:colorize, :input]
-        colorized_prompt + Paint.color(input_color) # NOTE: No reset, relies on next one
-                                                    # TODO buggy
+        colorized_prompt + Paint.color(*Array(input_color)) # NOTE: No reset, relies on next one
       else
         colorized_prompt
       end

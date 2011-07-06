@@ -2,7 +2,7 @@ require 'stringio'
 require 'paint'
 
 module FancyIrb
-  VERSION = ( File.read File.expand_path( '../VERSION', File.dirname(__FILE__)) ).chomp
+  VERSION = ( File.read File.expand_path( '../VERSION', File.dirname(__FILE__)) ).chomp.freeze
 end
 
 class << FancyIrb
@@ -52,13 +52,13 @@ class << FancyIrb
       :rocket_prompt   => '#=> ', # prompt to use for the rocket
       :result_prompt   => '=> ',  # prompt to use for normal output
       :colorize => {              # colors hash. Set to nil to deactivate colorizing
-        :rocket_prompt => :blue,
-        :result_prompt => :blue,
-        :input_prompt  => nil,
-        :irb_errors    => :red,
+        :rocket_prompt => [:blue],
+        :result_prompt => [:blue],
+        :input_prompt  => :nothing,
+        :irb_errors    => [:red],
         :stderr        => [:red, :bright],
         :stdout        => [:black, :bright],
-        :input         => nil,
+        :input         => :nothing,
         :output        => true, # wirb's output colorization
        },
       :result_proc     => default_result_proc,       # how to get the output result
