@@ -1,3 +1,6 @@
+== 0.7.1
+* Deactivate buggy input coloring :/
+
 == 0.7.0
 * Use paint gem for terminal colors
 * Fix some rocket issues (when using with colored content)

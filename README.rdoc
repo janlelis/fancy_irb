@@ -43,7 +43,7 @@ Rocket mode means: Output result as comment if there is enough space left on the
 When using double-width unicode chars, you should set <tt>:east_asian_width</tt> to <tt>true</tt>. It is deactivated because of performance issues.
 
 === Customize colors
-  See paint[https://github.com/janlelis/paint]
+See paint[https://github.com/janlelis/paint]
 
 === Modify your IRB output
 You can modify how to get and display the input. The <tt>result_proc</tt> is a proc which takes the irb context object and should return the value. You can change it with <tt>FancyIrb.set_result_proc do (your code) end</tt>. After that, each proc in <tt>output_procs</tt> gets triggered. They take the value and can return a modified one. You can use the <tt>FancyIrb.add_output_proc</tt> method for adding new output filter procs.

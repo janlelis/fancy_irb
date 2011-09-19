@@ -54,11 +54,11 @@ class << FancyIrb
       :colorize => {              # colors hash. Set to nil to deactivate colorizing
         :rocket_prompt => [:blue],
         :result_prompt => [:blue],
-        :input_prompt  => :nothing,
+        :input_prompt  => nil,
         :irb_errors    => [:red],
         :stderr        => [:red, :bright],
         :stdout        => [:black, :bright],
-        :input         => :nothing,
+        :input         => nil,
         :output        => true, # wirb's output colorization
        },
       :result_proc     => default_result_proc,       # how to get the output result
