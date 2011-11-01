@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'rake'
-require 'rake/rdoctask'
 require 'fileutils'
 
 def gemspec
@@ -29,13 +28,3 @@ task :gemspec do
   gemspec.validate
 end
 
-
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION').chomp : ""
-
-  rdoc.rdoc_dir = 'doc'
-  rdoc.title = "FancyIrb #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end

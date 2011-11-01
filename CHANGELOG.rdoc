@@ -1,3 +1,6 @@
+== 0.7.2
+* Fix a small bug that happens if there was no last line
+
 == 0.7.1
 * Deactivate buggy input coloring :/
 
