@@ -57,7 +57,7 @@ class << FancyIrb
         :input_prompt  => nil,
         :irb_errors    => [:red],
         :stderr        => [:red, :bright],
-        :stdout        => [:black, :bright],
+        :stdout        => nil,
         :input         => nil,
         :output        => true, # wirb's output colorization
        },
