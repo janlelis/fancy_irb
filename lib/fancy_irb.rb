@@ -2,7 +2,7 @@ require 'stringio'
 require 'paint'
 
 module FancyIrb
-  VERSION = ( File.read File.expand_path( '../VERSION', File.dirname(__FILE__)) ).chomp.freeze
+  VERSION = File.read( File.dirname(__FILE__) + '/../VERSION' ).chomp
 end
 
 class << FancyIrb
@@ -87,8 +87,7 @@ class << FancyIrb
 
     # hook code into IRB
     require 'fancy_irb/irb_ext'
-
-    "Enjoy your FancyIrb :)"
+    true
   end
 
   def add_output_proc(prepend = false, &proc)

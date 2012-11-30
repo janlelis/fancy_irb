@@ -27,7 +27,7 @@ You can pass an options hash. These are the default values:
       :input_prompt  => nil,
       :irb_errors    => [:red],
       :stderr        => [:red, :bright],
-      :stdout        => [:black, :bright],
+      :stdout        => nil,
       :input         => nil,
       :output        => true, # wirb's output colorization
      },
@@ -111,6 +111,6 @@ Feel free to fix a bug or implement a todo ;)
 
 Inspired by the irb_rocket gem from genki.
 
-Copyright (c) 2010-2011 Jan Lelis <http://rbjl.net> released under the MIT license.
+Copyright (c) 2010-2012 Jan Lelis <http://rbjl.net> released under the MIT license.
 
 J-_-L
