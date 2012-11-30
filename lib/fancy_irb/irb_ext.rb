@@ -45,7 +45,7 @@ module IRB
       print Paint::NOTHING
 
       # try to output in rocket mode (depending on rocket_mode setting)
-      if FancyIrb[:rocket_mode]
+      if FancyIrb[:rocket_mode] && !FancyIrb.skip_next_rocket
         # get lengths
         last_input               = @scanner.instance_variable_get( :@line )
         last_line_without_prompt = last_input.split("\n").last
@@ -60,8 +60,7 @@ module IRB
         stdout_lines  = FancyIrb.get_height
 
         # auto rocket mode
-        if FancyIrb[:rocket_mode] &&
-            screen_length > offset + rocket_length + output_length &&
+        if  screen_length > offset + rocket_length + output_length &&
             stdout_lines < screen_lines
           print TPUT[:sc] +                # save current cursor position
                 TPUT[:cuu1]*stdout_lines + # move cursor upwards    to the original input line
@@ -73,6 +72,7 @@ module IRB
         end
       end
       # normal output mode
+      FancyIrb.skip_next_rocket = false
       puts no_rocket + output
     end
 
@@ -155,6 +155,13 @@ class << $stderr
   end
 end
 
+# deactivate rocket for common system commands
+%w[system spawn].each{ |m|
+  Object.send(:define_method, m.to_sym, &lambda{ |*args, &block|
+    FancyIrb.skip_next_rocket = true
+    super(*args, &block)
+  })
+}
 
 # patch some input methods to track height
 alias gets_non_fancy gets

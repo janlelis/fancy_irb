@@ -7,7 +7,7 @@ end
 
 class << FancyIrb
   # setup instance variable accessors
-  attr_reader :options
+  attr_accessor :options
   def [](key, key2 = nil)
     if key2
       @options[key][key2]
@@ -21,13 +21,15 @@ class << FancyIrb
   attr_accessor :real_lengths
   attr_accessor :continue
   attr_accessor :stdout_colorful
+  attr_accessor :skip_next_rocket
 
   def start(user_options = {})
     # track some irb stuff
-    @height_counter  = []
-    @real_lengths    = { :output => 1, :input_prompt => 9999 } # or whatever
-    @stdout_colorful = false
-    @continue        = false
+    @height_counter   = []
+    @real_lengths     = { :output => 1, :input_prompt => 9999 } # or whatever
+    @stdout_colorful  = false
+    @continue         = false
+    @skip_next_rocket = false
 
     # set defaults and parse user options
     default_result_proc = proc{ |context|

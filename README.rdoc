@@ -2,13 +2,13 @@ FancyIrb patches your IRB to create a smooth output experience.
 
 == Features
 * Use fancy colors! You can colorize the prompts, irb errors, +stderr+ and +stdout+
-* Output evaluation results as Ruby comments
-* Enhance your output value using procs
+* Output evaluation results as Ruby comments (hash rocket)
+* Filter your output value using procs
 
 == Motivation
-I really like the {irb_rocket}[https://github.com/genki/irb_rocket] gem, which outputs Ruby results as hash rocket and colorizes errors. Unfortunately, the implementation leads to bugs, because it tries to run the whole command before printing anything to +stdout+. For this reason, I've rewritten (and extended) it.
+I really like the {irb_rocket}[https://github.com/genki/irb_rocket] gem, which outputs Ruby results using a hash rocket and colorizes errors. Unfortunately, the implementation leads to bugs, because it tries to run the whole command before printing anything to +stdout+. For this reason, I've rewritten and extended it.
 
-This plugin is compatible with other great gems like {hirb}[https://github.com/cldwalker/hirb], {interactive_editor}[https://github.com/jberkel/interactive_editor], etc.
+This rubygem is compatible with other great irb gems like {hirb}[https://github.com/cldwalker/hirb], {interactive_editor}[https://github.com/jberkel/interactive_editor], etc.
 
 == Usage
 
@@ -104,8 +104,6 @@ You need ansicon[https://github.com/adoxa/ansicon] and everything will be fine :
 === Features, maybe
 * Count string lengths without ansi escape sequences (would be more flexible than remembering)
 * "Always rocket"-mode
-
-Feel free to fix a bug or implement a todo ;)
 
 == Copyright / Credits
 
