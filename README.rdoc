@@ -1,14 +1,9 @@
-FancyIrb patches your IRB to create a smooth output experience.
+= FancyIrb
 
-== Features
-* Use fancy colors! You can colorize the prompts, irb errors, +stderr+ and +stdout+
-* Output evaluation results as Ruby comments (hash rocket)
-* Filter your output value using procs
+* Colorizes prompts, errors, +stderr+ and +stdout+
+* Uses Hash Rockets to display evaluation results
+* Allows you to apply a proc before showing the result
 
-== Motivation
-I really like the {irb_rocket}[https://github.com/genki/irb_rocket] gem, which outputs Ruby results using a hash rocket and colorizes errors. Unfortunately, the implementation leads to bugs, because it tries to run the whole command before printing anything to +stdout+. For this reason, I've rewritten and extended it.
-
-This rubygem is compatible with other great irb gems like {hirb}[https://github.com/cldwalker/hirb], {interactive_editor}[https://github.com/jberkel/interactive_editor], etc.
 
 == Usage
 
@@ -36,45 +31,12 @@ You can pass an options hash. These are the default values:
     :east_asian_width => false, # set to true if you have double-width characters (slower)
   }
 
-=== Rocket mode
 Rocket mode means: Output result as comment if there is enough space left on the terminal line and +stdout+ does not output more than the current terminal height.
 
-=== Wrong display widths?
-When using double-width unicode chars, you should set <tt>:east_asian_width</tt> to <tt>true</tt>. It is deactivated because of performance issues.
+For more information on which colors can be used, see the {paint documentation}[https://github.com/janlelis/paint].
 
-=== Customize colors
-See paint[https://github.com/janlelis/paint]
-
-=== Modify your IRB output
-You can modify how to get and display the input. The <tt>result_proc</tt> is a proc which takes the irb context object and should return the value. You can change it with <tt>FancyIrb.set_result_proc do (your code) end</tt>. After that, each proc in <tt>output_procs</tt> gets triggered. They take the value and can return a modified one. You can use the <tt>FancyIrb.add_output_proc</tt> method for adding new output filter procs.
-
-===== default_result_proc
-
-  default_result_proc = proc{ |context|
-    if context.inspect?
-      context.last_value.inspect
-    else
-      context.last_value
-    end
-  }
-
-===== default_colorizer_proc
-
-  default_colorizer_proc = proc{ |value|
-    FancyIrb.real_lengths[:output] =    value.size
-    if defined?(Wirb) && FancyIrb[:colorize, :output]
-      Wirb.colorize_result value
-    else
-      value 
-    end
-  }
-
-== FancyIrb on Windows?
-
-You need ansicon[https://github.com/adoxa/ansicon] and everything will be fine :D
 
 == Example configurations
-
 === Default
   FancyIrb.start
 
@@ -90,11 +52,37 @@ You need ansicon[https://github.com/adoxa/ansicon] and everything will be fine :
                                      context.last_value.awesome_inspect
                                    }
 
-=== Smileyfy output
-  FancyIrb.start
-  FancyIrb.add_output_proc do |value|
-    value + ' :)'
-  end
+
+== Advanced: Hook into IRB
+You can modify how to get and display the input. The <tt>result_proc</tt> is a proc which takes the irb context object and should return the value. You can change it with <tt>FancyIrb.set_result_proc do (your code) end</tt>. After that, each proc in <tt>output_procs</tt> gets triggered. They take the value and can return a modified one. You can use the <tt>FancyIrb.add_output_proc</tt> method for adding new output filter procs.
+
+=== default_result_proc
+
+  default_result_proc = proc{ |context|
+    if context.inspect?
+      context.last_value.inspect
+    else
+      context.last_value
+    end
+  }
+
+=== default_colorizer_proc
+
+  default_colorizer_proc = proc{ |value|
+    FancyIrb.real_lengths[:output] =    value.size
+    if defined?(Wirb) && FancyIrb[:colorize, :output]
+      Wirb.colorize_result value
+    else
+      value
+    end
+  }
+
+== Troubleshooting
+=== Windows Support
+You will need ansicon[https://github.com/adoxa/ansicon] or ConEmu[http://code.google.com/p/conemu-maximus5/].
+
+=== Wrong display widths?
+When using double-width unicode chars, you should set <tt>:east_asian_width</tt> to <tt>true</tt>. It is not activated by default, because of its performance impact.
 
 == TODO
 === Known bugs
@@ -105,10 +93,7 @@ You need ansicon[https://github.com/adoxa/ansicon] and everything will be fine :
 * Count string lengths without ansi escape sequences (would be more flexible than remembering)
 * "Always rocket"-mode
 
-== Copyright / Credits
+== J-_-L
+Inspired by the irb_rocket gem by genki.
 
-Inspired by the irb_rocket gem from genki.
-
-Copyright (c) 2010-2012 Jan Lelis <http://rbjl.net> released under the MIT license.
-
-J-_-L
+Copyright (c) 2010-2012, 2015 Jan Lelis <http://janlelis.com> released under the MIT license.
