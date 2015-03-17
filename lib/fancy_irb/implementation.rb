@@ -9,7 +9,7 @@ class << FancyIrb
 
   def start(user_options = {})
     @height_counter   = []
-    @real_lengths     = { :output => 1, :input_prompt => 9999 } # or whatever
+    @real_lengths     = { :output => 1, :input_prompt => Float::INFINITY }
     @stdout_colorful  = false
     @continue         = false
     @skip_next_rocket = false
