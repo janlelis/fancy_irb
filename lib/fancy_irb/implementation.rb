@@ -3,12 +3,12 @@ module FancyIrb
     attr_reader :options
     attr_reader :error_capturer
     attr_accessor :real_lengths
-    attr_accessor :continue
     attr_accessor :skip_next_rocket
 
     def start(user_options = {})
       set_defaults
       apply_user_options(user_options)
+      reset_line!
       extend!
 
       true
@@ -23,11 +23,8 @@ module FancyIrb
     end
 
     def set_defaults
-      @height_counter   = []
-      @real_lengths     = { :output => 1, :input_prompt => Float::INFINITY }
-      @stdout_colorful  = false
-      @continue         = false
       @skip_next_rocket = false
+      @real_lengths     = { :output => 1, :input_prompt => Float::INFINITY }
 
       @options = DEFAULT_OPTIONS.dup
       @options[:colorize] = @options[:colorize].dup if @options[:colorize]
@@ -70,8 +67,18 @@ module FancyIrb
       @options[:result_proc] = proc
     end
 
-    def reset_height
+    def reset_line!
       @height_counter = []
+      @indent = false
+    end
+
+    def track_indent!
+      @indent = true
+    end
+
+    def set_input_prompt_size(prompt, irb_scanner)
+      @real_lengths[:input_prompt] =
+        prompt.size + irb_scanner.indent * 2 + ( @indent ? 2 : 0 )
     end
 
     def track_height(data)

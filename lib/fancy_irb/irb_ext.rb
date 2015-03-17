@@ -31,33 +31,25 @@ module IRB
     # colorize prompt & input
     alias prompt_non_fancy prompt
     def prompt(*args, &block)
-      print Paint::NOTHING
       prompt = prompt_non_fancy(*args, &block)
 
-      # this is kinda hacky... but that's irb °_°
-      indents = @scanner.indent*2
-      if args[0] == IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C]
-        FancyIrb.continue = true
-      end
-      if FancyIrb.continue
-        indents += 2
-      end
-      FancyIrb.real_lengths[:input_prompt] = prompt.size + indents
+      FancyIrb.track_indent! if args[0] == IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C]
+      FancyIrb.set_input_prompt_size(prompt, @scanner)
 
-      colorized_prompt = FancyIrb.colorize prompt, FancyIrb[:colorize, :input_prompt]
+      colorized_prompt =
+        Paint::NOTHING + FancyIrb.colorize(prompt, FancyIrb[:colorize, :input_prompt])
+
       if input_color = FancyIrb[:colorize, :input]
-        # NOTE: No reset, relies on next one
-        colorized_prompt + Paint.color(*Array(input_color))
+        colorized_prompt + Paint.color(*Array(input_color)) # FIXME: No reset, relies on next one
       else
         colorized_prompt
       end
     end
 
-    # track height and capture irb errors (part 2)
+    # reset line and capture IRB errors (part 2)
     alias signal_status_non_fancy signal_status
     def signal_status(name, *args, &block)
-      FancyIrb.continue = false
-      FancyIrb.reset_height
+      FancyIrb.reset_line!
       signal_status_non_fancy(name, *args, &block)
     ensure
       if name == :IN_EVAL
@@ -69,7 +61,7 @@ module IRB
   class Context
     alias evaluate_non_fancy evaluate
 
-    # capture irb errors (part 1)
+    # capture IRB errors (part 1)
     def evaluate(*args)
       evaluate_non_fancy(*args)
     rescue Exception
