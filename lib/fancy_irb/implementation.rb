@@ -21,7 +21,6 @@ module FancyIrb
       require 'unicode/display_size' if @options[:east_asian_width]
       require_relative 'irb_ext'
       require_relative 'core_ext'
-      require_relative 'stream_ext'
       require_relative 'clean_up'
     end
 
