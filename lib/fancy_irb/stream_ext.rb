@@ -16,7 +16,7 @@ end
 
 # TODO testing and improving, e.g. getc does not contain "\n"
 class << $stdin
-  FancyIrb::STDIN_HOOKS.map(&:to_sym).each{ |m|
+  FancyIrb::STDIN_HOOKS.each{ |m|
     if $stdin.respond_to? m
       define_method m do |*args|
         res = super(*args)

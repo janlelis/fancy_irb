@@ -46,7 +46,7 @@ module FancyIrb
   DEACTIVATE_ROCKET = %w[
     system
     spawn
-  ]
+  ].map(&:to_sym)
 
   # TODO: each_byte, each_char, each_codepoint, each, etc
   STDIN_HOOKS = %w[
@@ -61,6 +61,6 @@ module FancyIrb
     readlines
     readpartial
     sysread
-  ]
+  ].map(&:to_sym)
 end
 

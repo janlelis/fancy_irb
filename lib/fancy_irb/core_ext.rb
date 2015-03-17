@@ -1,6 +1,6 @@
 # deactivate rocket for common system commands
 FancyIrb::DEACTIVATE_ROCKET.each{ |m|
-  Object.send(:define_method, m.to_sym, &lambda{ |*args, &block|
+  Object.send(:define_method, m, &lambda{ |*args, &block|
     FancyIrb.skip_next_rocket = true
     super(*args, &block)
   })
