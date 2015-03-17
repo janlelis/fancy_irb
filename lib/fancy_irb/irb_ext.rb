@@ -96,7 +96,3 @@ module IRB
     end
   end
 end
-
-require_relative 'core_ext'
-require_relative 'stream_ext'
-require_relative 'clean_up'

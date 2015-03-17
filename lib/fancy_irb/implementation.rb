@@ -26,8 +26,12 @@ class << FancyIrb
     @options[:colorize] = @options[:colorize].dup if @options[:colorize]
     parse_user_options(user_options)
 
-    # hook code into IRB
-    require 'fancy_irb/irb_ext'
+    # hook into IRB
+    require_relative 'irb_ext'
+    require_relative 'core_ext'
+    require_relative 'stream_ext'
+    require_relative 'clean_up'
+
     true
   end
 
