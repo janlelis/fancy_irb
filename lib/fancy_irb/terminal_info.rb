@@ -1,46 +1,29 @@
-if RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
-  unless ENV['ANSICON']
-    raise LoadError, 'FancyIrb needs ansicon on windows, see https://github.com/adoxa/ansicon'
-  end
+require 'io/console'
 
-  module FancyIrb
-    module TerminalInfo
+module FancyIrb
+  module TerminalInfo
+    def self.lines
+      STDIN.winsize[0]
+    end
+
+    def self.cols
+      STDIN.winsize[1]
+    end
+
+    if RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
       TPUT = {
         :sc   => "\e[s",
         :rc   => "\e[u",
         :cuu1 => "\e[1A",
         :cuf1 => "\e[1C",
       }
-
-      def self.cols
-         ENV['ANSICON'][/\((.*)x/, 1].to_i
-      end
-
-      def self.lines
-         ENV['ANSICON'][/\(.*x(.*)\)/, 1].to_i
-      end
-    end
-  end
-
-else
-
-  module FancyIrb
-    module TerminalInfo
+    else
       TPUT = {
         :sc   => `tput sc`,
         :rc   => `tput rc`,
         :cuu1 => `tput cuu1`,
         :cuf1 => `tput cuf1`,
       }
-
-      def self.cols
-       `tput cols`.to_i
-      end
-
-      def self.lines
-       `tput lines`.to_i
-      end
     end
   end
-
 end
