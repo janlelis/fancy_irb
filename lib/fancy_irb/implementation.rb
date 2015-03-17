@@ -1,19 +1,11 @@
 class << FancyIrb
-  attr_accessor :options
-  def [](key, key2 = nil)
-    if key2
-      @options[key][key2]
-    else
-      @options[key]
-    end
-  end
-
   attr_accessor :original_stdout
   attr_accessor :capture_irb_errors
   attr_accessor :real_lengths
   attr_accessor :continue
   attr_accessor :stdout_colorful
   attr_accessor :skip_next_rocket
+  attr_accessor :options
 
   def start(user_options = {})
     @height_counter   = []
@@ -22,9 +14,7 @@ class << FancyIrb
     @continue         = false
     @skip_next_rocket = false
 
-    @options = FancyIrb::DEFAULT_OPTIONS.dup
-    @options[:colorize] = @options[:colorize].dup if @options[:colorize]
-    parse_user_options(user_options)
+    set_options(user_options)
 
     # hook into IRB
     require_relative 'irb_ext'
@@ -35,7 +25,10 @@ class << FancyIrb
     true
   end
 
-  def parse_user_options(user_options)
+  def set_options(user_options)
+    @options = FancyIrb::DEFAULT_OPTIONS.dup
+    @options[:colorize] = @options[:colorize].dup if @options[:colorize]
+
     FancyIrb::DEFAULT_OPTIONS.each{ |key, value|
       # (ugly) 1 level deep merge, maybe refactor
       if key == :colorize
@@ -53,6 +46,14 @@ class << FancyIrb
             user_options.has_key?(key) ? user_options[key] : FancyIrb::DEFAULT_OPTIONS[key]
       end
     }
+  end
+
+  def [](key, key2 = nil)
+    if key2
+      @options[key][key2]
+    else
+      @options[key]
+    end
   end
 
   def add_output_proc(prepend = false, &proc)
