@@ -7,12 +7,11 @@ FancyIrb::DEACTIVATE_ROCKET.each{ |m|
 }
 
 # patch some input methods to track height
-module Kernel
+class Object
   private
 
-  alias gets_non_fancy gets
-  def gets(*args)
-    res = gets_non_fancy *args
+  def gets(*)
+    res = super
     FancyIrb.track_height res
     res
   end
