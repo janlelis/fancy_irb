@@ -1,12 +1,11 @@
 module FancyIrb
   class << self
-    attr_accessor :original_stdout
-    attr_accessor :capture_irb_errors
+    attr_reader :options
+    attr_reader :error_capturer
     attr_accessor :real_lengths
     attr_accessor :continue
     attr_accessor :stdout_colorful
     attr_accessor :skip_next_rocket
-    attr_accessor :options
 
     def start(user_options = {})
       set_defaults
@@ -137,6 +136,21 @@ module FancyIrb
 
     def prepare_stream_data(data, color = nil)
       @stdout_colorful ? Paint[data, *Array(color)] : data.to_s
+    end
+
+    def register_error_capturer!
+      @error_capturer = FancyIrb::ErrorCapturer.new
+    end
+
+    def present_and_clear_captured_error!
+      if @error_capturer
+        @error_capturer.restore_original_stdout
+        $stderr.puts colorize(
+          @error_capturer.error_string.chomp,
+          @options[:colorize][:irb_errors],
+        )
+        @error_capturer = nil
+      end
     end
   end
 end

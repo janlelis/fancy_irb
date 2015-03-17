@@ -5,6 +5,7 @@ require 'paint'
 
 require_relative 'fancy_irb/terminal_info'
 require_relative 'fancy_irb/size_detector'
+require_relative 'fancy_irb/error_capturer'
 require_relative 'fancy_irb/implementation'
 
 module FancyIrb
@@ -33,7 +34,7 @@ module FancyIrb
       :rocket_prompt => [:blue],
       :result_prompt => [:blue],
       :input_prompt  => nil,
-      :irb_errors    => [:red],
+      :irb_errors    => [:red, :clean],
       :stderr        => [:red, :bright],
       :stdout        => nil,
       :input         => nil,

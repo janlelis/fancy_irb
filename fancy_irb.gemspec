@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "lib/fancy_irb/terminal_info.rb",
     "lib/fancy_irb/implementation.rb",
     "lib/fancy_irb/size_detector.rb",
+    "lib/fancy_irb/error_capturer.rb",
     "lib/fancy_irb/core_ext.rb",
     "lib/fancy_irb/clean_up.rb",
     "lib/fancy_irb/version.rb",

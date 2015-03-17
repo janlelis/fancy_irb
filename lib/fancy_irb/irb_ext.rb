@@ -61,20 +61,10 @@ module IRB
       signal_status_non_fancy(name, *args, &block)
     ensure
       if name == :IN_EVAL
-        if FancyIrb.capture_irb_errors
-          errors = FancyIrb.capture_irb_errors.string
-
-          $stdout = FancyIrb.original_stdout
-          FancyIrb.capture_irb_errors = nil
-          FancyIrb.original_stdout    = nil
-
-          unless errors.empty?
-            warn FancyIrb.colorize(errors.chomp, FancyIrb[:colorize, :irb_errors])
-          end
-        end
-      end#if
-    end#def
-  end#class
+        FancyIrb.present_and_clear_captured_error!
+      end
+    end
+  end
 
   class Context
     alias evaluate_non_fancy evaluate
@@ -84,11 +74,9 @@ module IRB
       FancyIrb.stdout_colorful = true
       evaluate_non_fancy(*args)
       FancyIrb.stdout_colorful = false
-    rescue Exception => err
-      FancyIrb.stdout_colorful    = false
-      FancyIrb.capture_irb_errors = StringIO.new
-      FancyIrb.original_stdout, $stdout = $stdout, FancyIrb.capture_irb_errors
-      raise err
+    rescue Exception
+      FancyIrb.register_error_capturer!
+      raise
     end
   end
 end
