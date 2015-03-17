@@ -82,4 +82,13 @@ class << FancyIrb
   def colorize(string, color)
     Paint[string, *Array(color)]
   end
+
+  # get_result and pass it into every format_output_proc
+  def get_output_from_irb_context(irb_context)
+    Array(FancyIrb[:output_procs]).inject(
+      FancyIrb[:result_proc][irb_context]
+    ){ |output, formatter|
+      formatter[output].to_s
+    }
+  end
 end

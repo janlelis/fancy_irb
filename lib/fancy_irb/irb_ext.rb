@@ -1,19 +1,12 @@
 module IRB
   class Irb
     def output_value
-      # prepare prompts
       rocket    = FancyIrb.colorize \
           FancyIrb[:rocket_prompt], FancyIrb[:colorize, :rocket_prompt]
       no_rocket = FancyIrb.colorize \
           FancyIrb[:result_prompt], FancyIrb[:colorize, :result_prompt]
 
-      # get_result and pass it into every format_output_proc
-      result = FancyIrb[:result_proc][ @context ]
-
-      output = Array( FancyIrb[:output_procs] ).
-        inject( result.to_s ){ |output, formatter|
-          formatter[ output ].to_s
-        }
+      output = FancyIrb.get_output_from_irb_context(@context)
 
       # reset color
       print Paint::NOTHING
