@@ -12,7 +12,7 @@
 
 You can pass an options hash. These are the default values:
 
-  default_options = {
+  DEFAULT_OPTIONS = {
     :rocket_mode     => true,   # activate or deactivate #=> rocket output
     :rocket_prompt   => '#=> ', # prompt to use for the rocket
     :result_prompt   => '=> ',  # prompt to use for normal output
@@ -26,8 +26,8 @@ You can pass an options hash. These are the default values:
       :input         => nil,
       :output        => true, # wirb's output colorization
      },
-    :result_proc     => default_result_proc,       # how to get the output result (see below)
-    :output_procs    => [default_colorizer_proc],  # you can modify/enhance/log your output
+    :result_proc     => DEFAULT_RESULT_PROC,       # how to get the output result (see below)
+    :output_procs    => [DEFAULT_COLORIZER_PROC],  # you can modify/enhance/log your output
     :east_asian_width => false, # set to true if you have double-width characters (slower)
   }
 
