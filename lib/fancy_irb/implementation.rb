@@ -9,28 +9,34 @@ module FancyIrb
     attr_accessor :options
 
     def start(user_options = {})
+      set_defaults
+      apply_user_options(user_options)
+      extend!
+
+      true
+    end
+
+    # hook into IRB
+    def extend!
+      require 'unicode/display_size' if @options[:east_asian_width]
+      require_relative 'irb_ext'
+      require_relative 'core_ext'
+      require_relative 'stream_ext'
+      require_relative 'clean_up'
+    end
+
+    def set_defaults
       @height_counter   = []
       @real_lengths     = { :output => 1, :input_prompt => Float::INFINITY }
       @stdout_colorful  = false
       @continue         = false
       @skip_next_rocket = false
 
-      set_options(user_options)
-
-      # hook into IRB
-      require 'unicode/display_size' if @options[:east_asian_width]
-      require_relative 'irb_ext'
-      require_relative 'core_ext'
-      require_relative 'stream_ext'
-      require_relative 'clean_up'
-
-      true
-    end
-
-    def set_options(user_options)
       @options = DEFAULT_OPTIONS.dup
       @options[:colorize] = @options[:colorize].dup if @options[:colorize]
+    end
 
+    def apply_user_options(user_options)
       DEFAULT_OPTIONS.each{ |key, value|
         # (ugly) 1 level deep merge, maybe refactor
         if key == :colorize
