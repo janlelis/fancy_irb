@@ -1,9 +1,7 @@
+require_relative 'fancy_irb/version'
+
 require 'stringio'
 require 'paint'
-
-module FancyIrb
-  VERSION = File.read( File.dirname(__FILE__) + '/../VERSION' ).chomp
-end
 
 class << FancyIrb
   # setup instance variable accessors
@@ -45,7 +43,7 @@ class << FancyIrb
       if defined?(Wirb) && FancyIrb[:colorize, :output]
         Wirb.colorize_result value
       else
-        value 
+        value
       end
     }
 
@@ -126,7 +124,7 @@ class << FancyIrb
     RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
   end
 
-  if FancyIrb.win? 
+  if FancyIrb.win?
     raise LoadError, 'FancyIrb needs ansicon on windows, see https://github.com/adoxa/ansicon' unless ENV['ANSICON']
     def current_length
        ENV['ANSICON'][/\((.*)x/, 1].to_i

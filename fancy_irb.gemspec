@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
 
+require File.dirname(__FILE__) + "/lib/fancy_irb/version"
+
 Gem::Specification.new do |s|
   s.name        = "fancy_irb"
-  s.version     = File.read('VERSION').chomp
+  s.version     = FancyIrb::VERSION
   s.authors     = ["Jan Lelis"]
   s.email       = "mail@janlelis.de"
   s.homepage    = "http://github.com/janlelis/fancy_irb"
@@ -18,11 +20,11 @@ Gem::Specification.new do |s|
     "LICENSE",
     "README.rdoc",
     "Rakefile",
-    "VERSION",
     "CHANGELOG.rdoc",
     "fancy_irb.gemspec",
     "lib/fancy_irb.rb",
     "lib/fancy_irb/irb_ext.rb"
+    "lib/fancy_irb/version.rb"
   ]
 end
 
