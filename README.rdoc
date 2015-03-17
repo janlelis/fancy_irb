@@ -79,7 +79,7 @@ You can modify how to get and display the input. The <tt>result_proc</tt> is a p
 
 == Troubleshooting
 === Windows Support
-You will need ansicon[https://github.com/adoxa/ansicon] or ConEmu[http://code.google.com/p/conemu-maximus5/].
+You will need ansicon[https://github.com/adoxa/ansicon].
 
 === Wrong display widths?
 When using double-width unicode chars, you should set <tt>:east_asian_width</tt> to <tt>true</tt>. It is not activated by default, because of its performance impact.
