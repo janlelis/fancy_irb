@@ -120,25 +120,6 @@ module IRB
   end
 end
 
-# hook into streams to count lines and colorize
-class << $stdout
-  alias write_non_fancy write
-  def write(data)
-    FancyIrb.track_height data
-    FancyIrb.write_stream $stdout, data, FancyIrb[:colorize, :stdout]
-  end
-end
-
-class << $stderr
-  alias write_non_fancy write
-  def write(data)
-    FancyIrb.track_height data
-    FancyIrb.write_stream $stderr, data, FancyIrb[:colorize, :stderr]
-  rescue Exception # catch fancy_irb errors
-    write_non_fancy data
-  end
-end
-
 # deactivate rocket for common system commands
 %w[system spawn].each{ |m|
   Object.send(:define_method, m.to_sym, &lambda{ |*args, &block|
@@ -155,25 +136,7 @@ def gets(*args)
   res
 end
 
-# TODO testing and improving, e.g. getc does not contain "\n"
-class << $stdin
-  stdin_hooks = %w[binread read gets getc getbyte readbyte readchar readline readlines readpartial sysread]
-  # TODO: each_byte, each_char, each_codepoint, each
-
-  stdin_hooks.each{ |m|
-    msym   = m.to_sym
-    malias = (m+'_non_fancy').to_sym
-
-    if $stdin.respond_to? msym
-      alias_method malias, msym
-      define_method msym do |*args|
-        res = send malias, *args
-        FancyIrb.track_height res
-        res
-      end
-    end
-  }
-end
+require_relative 'stream_ext'
 
 END{ print "\e[0m" } # reset colors when exiting
 

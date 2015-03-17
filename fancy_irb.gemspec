@@ -24,7 +24,9 @@ Gem::Specification.new do |s|
     "lib/fancy_irb.rb",
     "lib/fancy_irb/irb_ext.rb",
     "lib/fancy_irb/terminal_info.rb",
-    "lib/fancy_irb/version.rb"
+    "lib/fancy_irb/implementation.rb",
+    "lib/fancy_irb/stream_ext.rb",
+    "lib/fancy_irb/version.rb",
   ]
 end
 
