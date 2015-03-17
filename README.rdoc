@@ -56,9 +56,9 @@ For more information on which colors can be used, see the {paint documentation}[
 == Advanced: Hook into IRB
 You can modify how to get and display the input. The <tt>result_proc</tt> is a proc which takes the irb context object and should return the value. You can change it with <tt>FancyIrb.set_result_proc do (your code) end</tt>. After that, each proc in <tt>output_procs</tt> gets triggered. They take the value and can return a modified one. You can use the <tt>FancyIrb.add_output_proc</tt> method for adding new output filter procs.
 
-=== default_result_proc
+=== Default result_proc
 
-  default_result_proc = proc{ |context|
+  DEFAULT_RESULT_PROC = proc{ |context|
     if context.inspect?
       context.last_value.inspect
     else
@@ -66,9 +66,9 @@ You can modify how to get and display the input. The <tt>result_proc</tt> is a p
     end
   }
 
-=== default_colorizer_proc
+=== Default colorizer_proc
 
-  default_colorizer_proc = proc{ |value|
+  DEFAULT_COLORIZER_PROC = proc{ |value|
     FancyIrb.real_lengths[:output] =    value.size
     if defined?(Wirb) && FancyIrb[:colorize, :output]
       Wirb.colorize_result value
