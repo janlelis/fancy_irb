@@ -71,9 +71,7 @@ module IRB
 
     # capture irb errors (part 1)
     def evaluate(*args)
-      FancyIrb.stdout_colorful = true
       evaluate_non_fancy(*args)
-      FancyIrb.stdout_colorful = false
     rescue Exception
       FancyIrb.register_error_capturer!
       raise

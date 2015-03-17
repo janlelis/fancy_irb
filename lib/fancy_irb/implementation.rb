@@ -4,7 +4,6 @@ module FancyIrb
     attr_reader :error_capturer
     attr_accessor :real_lengths
     attr_accessor :continue
-    attr_accessor :stdout_colorful
     attr_accessor :skip_next_rocket
 
     def start(user_options = {})
@@ -130,12 +129,8 @@ module FancyIrb
     def patch_stream(object, stream_name)
       object.define_singleton_method :write do |data|
         FancyIrb.track_height data
-        super FancyIrb.prepare_stream_data(data, FancyIrb[:colorize, stream_name])
+        super FancyIrb.colorize(data, FancyIrb[:colorize, stream_name])
       end
-    end
-
-    def prepare_stream_data(data, color = nil)
-      @stdout_colorful ? Paint[data, *Array(color)] : data.to_s
     end
 
     def register_error_capturer!
