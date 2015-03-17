@@ -84,7 +84,7 @@ class << FancyIrb
 
   def write_stream(stream, data, color = nil)
     stream.write_non_fancy(
-      FancyIrb.stdout_colorful ? Paint[data, *Array(color)] : data.to_s
+      @stdout_colorful ? Paint[data, *Array(color)] : data.to_s
     )
   end
 
@@ -94,8 +94,8 @@ class << FancyIrb
 
   # get_result and pass it into every format_output_proc
   def get_output_from_irb_context(irb_context)
-    Array(FancyIrb[:output_procs]).inject(
-      FancyIrb[:result_proc][irb_context]
+    Array(@options[:output_procs]).inject(
+      @options[:result_proc][irb_context]
     ){ |output, formatter|
       formatter[output].to_s
     }
@@ -103,10 +103,10 @@ class << FancyIrb
 
   def get_offset_from_irb_scanner(irb_scanner)
     last_line = irb_scanner.instance_variable_get(:@line).split("\n").last
-    1 + FancyIrb.real_lengths[:input_prompt] + (last_line ? last_line.display_size : 0)
+    1 + @real_lengths[:input_prompt] + (last_line ? last_line.display_size : 0)
   end
 
   def get_cols_to_show_from_offset(offset)
-    offset + FancyIrb[:rocket_prompt].size + FancyIrb.real_lengths[:output]
+    offset + @options[:rocket_prompt].size + @real_lengths[:output]
   end
 end
