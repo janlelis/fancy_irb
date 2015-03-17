@@ -1,7 +1,8 @@
 == 0.8.0 (master)
 * Bump paint and unicode-display_width dependencies
+* Internals partly refactored
 * Drop support for Ruby 1
-* Don't depend on ansicon specifics for windows
+* Don't depend on ansicon specifics for windows (use io/console)
 
 == 0.7.3
 * Don't colorize stdout by default
