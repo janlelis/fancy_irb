@@ -18,33 +18,29 @@ module IRB
       # reset color
       print Paint::NOTHING
 
-      # try to output in rocket mode (depending on rocket_mode setting)
       if FancyIrb[:rocket_mode] && !FancyIrb.skip_next_rocket
-        # get lengths
         last_input               = @scanner.instance_variable_get( :@line )
         last_line_without_prompt = last_input.split("\n").last
-        offset =  + FancyIrb.real_lengths[:input_prompt] + 1
+        offset =  FancyIrb.real_lengths[:input_prompt] + 1
         if last_line_without_prompt
           offset += last_line_without_prompt.display_size
         end
-        screen_length = FancyIrb::TerminalInfo.cols
-        screen_lines  = FancyIrb::TerminalInfo.lines
-        output_length = FancyIrb.real_lengths[:output]
-        rocket_length = FancyIrb[:rocket_prompt].size
-        stdout_lines  = FancyIrb.get_height
+        lines_to_show = FancyIrb.get_height
+        cols_to_show  = offset + FancyIrb[:rocket_prompt].size + FancyIrb.real_lengths[:output]
 
-        # auto rocket mode
-        if  screen_length > offset + rocket_length + output_length &&
-            stdout_lines < screen_lines
-          print FancyIrb::TerminalInfo::TPUT[:sc] +                # save current cursor position
-                FancyIrb::TerminalInfo::TPUT[:cuu1]*stdout_lines + # move cursor upwards    to the original input line
-                FancyIrb::TerminalInfo::TPUT[:cuf1]*offset +       # move cursor rightwards to the original input offset
-                rocket +                                           # draw rocket prompt
-                output +                                           # draw output
-                FancyIrb::TerminalInfo::TPUT[:rc]                  # return to normal cursor position
+        if  FancyIrb::TerminalInfo.lines > lines_to_show &&
+            FancyIrb::TerminalInfo.cols  > cols_to_show
+          print \
+            FancyIrb::TerminalInfo::TPUT[:sc] +                   # save current cursor position
+            FancyIrb::TerminalInfo::TPUT[:cuu1] * lines_to_show + # move cursor upwards    to the original input line
+            FancyIrb::TerminalInfo::TPUT[:cuf1] * offset +        # move cursor rightwards to the original input offset
+            rocket +                                              # draw rocket prompt
+            output +                                              # draw output
+            FancyIrb::TerminalInfo::TPUT[:rc]                     # return to normal cursor position
           return
         end
       end
+
       # normal output mode
       FancyIrb.skip_next_rocket = false
       puts no_rocket + output
