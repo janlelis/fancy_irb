@@ -93,6 +93,15 @@ module FancyIrb
       Paint[string, *Array(color)]
     end
 
+    # Note: No reset, relies on next one
+    def append_input_color(string)
+      if input_color = @options[:colorize][:input]
+        string + Paint.color(*Array(input_color))
+      else
+        string
+      end
+    end
+
     # get_result and pass it into every format_output_proc
     def get_output_from_irb_context(irb_context)
       Array(@options[:output_procs]).inject(
@@ -136,7 +145,7 @@ module FancyIrb
     def patch_stream(object, stream_name)
       object.define_singleton_method :write do |data|
         FancyIrb.track_height data
-        super FancyIrb.colorize(data, FancyIrb[:colorize, stream_name])
+        super Paint::NOTHING + FancyIrb.colorize(data, FancyIrb[:colorize, stream_name])
       end
     end
 
@@ -147,7 +156,7 @@ module FancyIrb
     def present_and_clear_captured_error!
       if @error_capturer
         @error_capturer.restore_original_stdout
-        $stderr.puts colorize(
+        $stderr.puts Paint::NOTHING + colorize(
           @error_capturer.error_string.chomp,
           @options[:colorize][:irb_errors],
         )

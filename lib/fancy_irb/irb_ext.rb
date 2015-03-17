@@ -39,11 +39,7 @@ module IRB
       colorized_prompt =
         Paint::NOTHING + FancyIrb.colorize(prompt, FancyIrb[:colorize, :input_prompt])
 
-      if input_color = FancyIrb[:colorize, :input]
-        colorized_prompt + Paint.color(*Array(input_color)) # FIXME: No reset, relies on next one
-      else
-        colorized_prompt
-      end
+      FancyIrb.append_input_color(colorized_prompt)
     end
 
     # reset line and capture IRB errors (part 2)
