@@ -122,7 +122,4 @@ end
 
 require_relative 'core_ext'
 require_relative 'stream_ext'
-
-END{ print "\e[0m" } # reset colors when exiting
-
-# J-_-L
+require_relative 'clean_up'
