@@ -1,13 +1,11 @@
 module IRB
   class Irb
-    def colorize(string, color)
-      Paint[string, *Array(color)]
-    end
-
     def output_value
       # prepare prompts
-      rocket    = colorize FancyIrb[:rocket_prompt], FancyIrb[:colorize, :rocket_prompt]
-      no_rocket = colorize FancyIrb[:result_prompt], FancyIrb[:colorize, :result_prompt]
+      rocket    = FancyIrb.colorize \
+          FancyIrb[:rocket_prompt], FancyIrb[:colorize, :rocket_prompt]
+      no_rocket = FancyIrb.colorize \
+          FancyIrb[:result_prompt], FancyIrb[:colorize, :result_prompt]
 
       # get_result and pass it into every format_output_proc
       result = FancyIrb[:result_proc][ @context ]
@@ -64,7 +62,7 @@ module IRB
       indents += 2 if FancyIrb.continue
       FancyIrb.real_lengths[:input_prompt] = prompt.size + indents
 
-      colorized_prompt = colorize prompt, FancyIrb[:colorize, :input_prompt]
+      colorized_prompt = FancyIrb.colorize prompt, FancyIrb[:colorize, :input_prompt]
       if input_color = FancyIrb[:colorize, :input]
         colorized_prompt + Paint.color(*Array(input_color)) # NOTE: No reset, relies on next one
       else
@@ -88,7 +86,7 @@ module IRB
           FancyIrb.original_stdout    = nil
 
           unless errors.empty?
-            warn colorize( errors.chomp, FancyIrb[:colorize, :irb_errors] )
+            warn FancyIrb.colorize(errors.chomp, FancyIrb[:colorize, :irb_errors])
           end
         end
       end#if

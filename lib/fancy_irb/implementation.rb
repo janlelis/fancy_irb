@@ -113,4 +113,8 @@ class << FancyIrb
   def write_stream(stream, data, color = nil)
     stream.write_non_fancy( FancyIrb.stdout_colorful ? Paint[data, *Array(color)] : data.to_s )
   end
+
+  def colorize(string, color)
+    Paint[string, *Array(color)]
+  end
 end
