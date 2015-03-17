@@ -82,10 +82,8 @@ class << FancyIrb
     1 + ( @height_counter == [0] ? 0 : @height_counter.reduce(:+) || 0 )
   end
 
-  def write_stream(stream, data, color = nil)
-    stream.write_non_fancy(
-      @stdout_colorful ? Paint[data, *Array(color)] : data.to_s
-    )
+  def prepare_stream_data(data, color = nil)
+    @stdout_colorful ? Paint[data, *Array(color)] : data.to_s
   end
 
   def colorize(string, color)

@@ -1,18 +1,16 @@
 class << $stdout
-  alias write_non_fancy write
   def write(data)
     FancyIrb.track_height data
-    FancyIrb.write_stream $stdout, data, FancyIrb[:colorize, :stdout]
+    super FancyIrb.prepare_stream_data(data, FancyIrb[:colorize, :stdout])
   end
 end
 
 class << $stderr
-  alias write_non_fancy write
   def write(data)
     FancyIrb.track_height data
-    FancyIrb.write_stream $stderr, data, FancyIrb[:colorize, :stderr]
+    super FancyIrb.prepare_stream_data(data, FancyIrb[:colorize, :stderr])
   rescue Exception # catch fancy_irb errors
-    write_non_fancy data
+    super data
   end
 end
 
