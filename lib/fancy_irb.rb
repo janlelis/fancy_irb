@@ -4,7 +4,7 @@ require 'stringio'
 require 'paint'
 
 require_relative 'fancy_irb/terminal_info'
-require_relative 'fancy_irb/height_detector'
+require_relative 'fancy_irb/size_detector'
 require_relative 'fancy_irb/implementation'
 
 module FancyIrb

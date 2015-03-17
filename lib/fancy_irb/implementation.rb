@@ -18,6 +18,7 @@ module FancyIrb
       set_options(user_options)
 
       # hook into IRB
+      require 'unicode/display_size' if @options[:east_asian_width]
       require_relative 'irb_ext'
       require_relative 'core_ext'
       require_relative 'stream_ext'
@@ -71,7 +72,7 @@ module FancyIrb
     end
 
     def track_height(data)
-      @height_counter << HeightDetector.run(data, TerminalInfo.cols)
+      @height_counter << SizeDetector.height_of(data, TerminalInfo.cols)
     end
 
     def get_height
@@ -97,7 +98,7 @@ module FancyIrb
 
     def get_offset_from_irb_scanner(irb_scanner)
       last_line = irb_scanner.instance_variable_get(:@line).split("\n").last
-      1 + @real_lengths[:input_prompt] + (last_line ? last_line.display_size : 0)
+      1 + @real_lengths[:input_prompt] + (last_line ? SizeDetector.width_of(last_line) : 0)
     end
 
     def get_cols_to_show_from_offset(offset)

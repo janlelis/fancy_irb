@@ -8,12 +8,3 @@ FancyIrb::DEACTIVATE_ROCKET.each{ |m|
 
 # patch some kernel methods to track height
 FancyIrb.register_height_trackers Object, FancyIrb::STDIN_TRACK_HEIGHT_METHODS
-
-# respect full-width chars
-if FancyIrb[:east_asian_width]
-  require 'unicode/display_size'
-else
-  class String
-    alias display_size size
-  end
-end
