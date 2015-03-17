@@ -1,42 +1,35 @@
 module IRB
   class Irb
     def output_value
-      rocket    = FancyIrb.colorize \
-          FancyIrb[:rocket_prompt], FancyIrb[:colorize, :rocket_prompt]
-      no_rocket = FancyIrb.colorize \
-          FancyIrb[:result_prompt], FancyIrb[:colorize, :result_prompt]
-
       output = FancyIrb.get_output_from_irb_context(@context)
 
-      # reset color
-      print Paint::NOTHING
-
       if FancyIrb[:rocket_mode] && !FancyIrb.skip_next_rocket
-        last_input               = @scanner.instance_variable_get( :@line )
+        last_input = @scanner.instance_variable_get(:@line)
         last_line_without_prompt = last_input.split("\n").last
         offset =  FancyIrb.real_lengths[:input_prompt] + 1
-        if last_line_without_prompt
-          offset += last_line_without_prompt.display_size
-        end
+        offset += last_line_without_prompt.display_size if last_line_without_prompt
+
         lines_to_show = FancyIrb.get_height
         cols_to_show  = offset + FancyIrb[:rocket_prompt].size + FancyIrb.real_lengths[:output]
 
         if  FancyIrb::TerminalInfo.lines > lines_to_show &&
             FancyIrb::TerminalInfo.cols  > cols_to_show
           print \
+            Paint::NOTHING +
             FancyIrb::TerminalInfo::TPUT[:sc] +                   # save current cursor position
             FancyIrb::TerminalInfo::TPUT[:cuu1] * lines_to_show + # move cursor upwards    to the original input line
             FancyIrb::TerminalInfo::TPUT[:cuf1] * offset +        # move cursor rightwards to the original input offset
-            rocket +                                              # draw rocket prompt
+            FancyIrb.colorize(FancyIrb[:rocket_prompt], FancyIrb[:colorize, :rocket_prompt]) + # draw rocket prompt
             output +                                              # draw output
             FancyIrb::TerminalInfo::TPUT[:rc]                     # return to normal cursor position
           return
         end
       end
-
-      # normal output mode
       FancyIrb.skip_next_rocket = false
-      puts no_rocket + output
+      puts \
+        Paint::NOTHING +
+        FancyIrb.colorize(FancyIrb[:result_prompt], FancyIrb[:colorize, :result_prompt]) +
+        output
     end
 
     # colorize prompt & input
