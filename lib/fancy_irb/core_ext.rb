@@ -17,3 +17,12 @@ module Kernel
     res
   end
 end
+
+# respect full-width chars
+if FancyIrb[:east_asian_width]
+  require 'unicode/display_size'
+else
+  class String
+    alias display_size size
+  end
+end
