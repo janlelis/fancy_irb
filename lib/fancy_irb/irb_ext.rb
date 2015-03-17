@@ -8,22 +8,6 @@ end
 
 module IRB
   class Irb
-    if FancyIrb.win?
-      TPUT = {
-        :sc   => "\e[s",
-        :rc   => "\e[u",
-        :cuu1 => "\e[1A",
-        :cuf1 => "\e[1C",
-      }
-    else
-      TPUT = {
-        :sc   => `tput sc`,
-        :rc   => `tput rc`,
-        :cuu1 => `tput cuu1`,
-        :cuf1 => `tput cuf1`,
-      }
-    end
-
     def colorize(string, color)
       Paint[string, *Array(color)]
     end
@@ -32,7 +16,7 @@ module IRB
       # prepare prompts
       rocket    = colorize FancyIrb[:rocket_prompt], FancyIrb[:colorize, :rocket_prompt]
       no_rocket = colorize FancyIrb[:result_prompt], FancyIrb[:colorize, :result_prompt]
-      
+
       # get_result and pass it into every format_output_proc
       result = FancyIrb[:result_proc][ @context ]
 
@@ -53,8 +37,8 @@ module IRB
         if last_line_without_prompt
           offset += last_line_without_prompt.display_size
         end
-        screen_length = FancyIrb.current_length
-        screen_lines  = FancyIrb.current_lines
+        screen_length = FancyIrb::TerminalInfo.cols
+        screen_lines  = FancyIrb::TerminalInfo.lines
         output_length = FancyIrb.real_lengths[:output]
         rocket_length = FancyIrb[:rocket_prompt].size
         stdout_lines  = FancyIrb.get_height
@@ -62,12 +46,12 @@ module IRB
         # auto rocket mode
         if  screen_length > offset + rocket_length + output_length &&
             stdout_lines < screen_lines
-          print TPUT[:sc] +                # save current cursor position
-                TPUT[:cuu1]*stdout_lines + # move cursor upwards    to the original input line
-                TPUT[:cuf1]*offset +       # move cursor rightwards to the original input offset
-                rocket +                   # draw rocket prompt
-                output +                   # draw output
-                TPUT[:rc]                  # return to normal cursor position
+          print FancyIrb::TerminalInfo::TPUT[:sc] +                # save current cursor position
+                FancyIrb::TerminalInfo::TPUT[:cuu1]*stdout_lines + # move cursor upwards    to the original input line
+                FancyIrb::TerminalInfo::TPUT[:cuf1]*offset +       # move cursor rightwards to the original input offset
+                rocket +                                           # draw rocket prompt
+                output +                                           # draw output
+                FancyIrb::TerminalInfo::TPUT[:rc]                  # return to normal cursor position
           return
         end
       end
@@ -87,7 +71,7 @@ module IRB
       FancyIrb.continue = true if args[0] == IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C]
       indents += 2 if FancyIrb.continue
       FancyIrb.real_lengths[:input_prompt] = prompt.size + indents
-     
+
       colorized_prompt = colorize prompt, FancyIrb[:colorize, :input_prompt]
       if input_color = FancyIrb[:colorize, :input]
         colorized_prompt + Paint.color(*Array(input_color)) # NOTE: No reset, relies on next one
@@ -106,11 +90,11 @@ module IRB
       if name == :IN_EVAL
         if FancyIrb.capture_irb_errors
           errors = FancyIrb.capture_irb_errors.string
-          
+
           $stdout = FancyIrb.original_stdout
           FancyIrb.capture_irb_errors = nil
           FancyIrb.original_stdout    = nil
-          
+
           unless errors.empty?
             warn colorize( errors.chomp, FancyIrb[:colorize, :irb_errors] )
           end

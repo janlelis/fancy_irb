@@ -3,6 +3,9 @@ require_relative 'fancy_irb/version'
 require 'stringio'
 require 'paint'
 
+require_relative 'fancy_irb/terminal_info'
+
+
 class << FancyIrb
   # setup instance variable accessors
   attr_accessor :options
@@ -107,7 +110,7 @@ class << FancyIrb
     data       = Paint.unpaint(data.to_s)
     lines      = data.count("\n")
     long_lines = data.split("\n").inject(0){ |sum, line|
-      sum + (line.display_size / current_length)
+      sum + (line.display_size / FancyIrb::TerminalInfo.cols)
     }
     @height_counter << lines + long_lines
   end
@@ -118,28 +121,5 @@ class << FancyIrb
 
   def write_stream(stream, data, color = nil)
     stream.write_non_fancy( FancyIrb.stdout_colorful ? Paint[data, *Array(color)] : data.to_s )
-  end
-
-  def win?
-    RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
-  end
-
-  if FancyIrb.win?
-    raise LoadError, 'FancyIrb needs ansicon on windows, see https://github.com/adoxa/ansicon' unless ENV['ANSICON']
-    def current_length
-       ENV['ANSICON'][/\((.*)x/, 1].to_i
-    end
-
-    def current_lines
-       ENV['ANSICON'][/\(.*x(.*)\)/, 1].to_i
-    end
-  else
-    def current_length
-     `tput cols`.to_i
-    end
-
-    def current_lines
-     `tput lines`.to_i
-    end
   end
 end
