@@ -21,9 +21,17 @@ class << FancyIrb
     @stdout_colorful  = false
     @continue         = false
     @skip_next_rocket = false
+
     @options = FancyIrb::DEFAULT_OPTIONS.dup
     @options[:colorize] = @options[:colorize].dup if @options[:colorize]
+    parse_user_options(user_options)
 
+    # hook code into IRB
+    require 'fancy_irb/irb_ext'
+    true
+  end
+
+  def parse_user_options(user_options)
     FancyIrb::DEFAULT_OPTIONS.each{ |key, value|
       # (ugly) 1 level deep merge, maybe refactor
       if key == :colorize
@@ -41,10 +49,6 @@ class << FancyIrb
             user_options.has_key?(key) ? user_options[key] : FancyIrb::DEFAULT_OPTIONS[key]
       end
     }
-
-    # hook code into IRB
-    require 'fancy_irb/irb_ext'
-    true
   end
 
   def add_output_proc(prepend = false, &proc)
