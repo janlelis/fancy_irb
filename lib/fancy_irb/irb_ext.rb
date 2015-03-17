@@ -23,7 +23,6 @@ module IRB
       end
       FancyIrb.skip_next_rocket = false
       puts \
-        Paint::NOTHING +
         FancyIrb.colorize(FancyIrb[:result_prompt], FancyIrb[:colorize, :result_prompt]) +
         output
     end
@@ -37,7 +36,7 @@ module IRB
       FancyIrb.set_input_prompt_size(prompt, @scanner)
 
       colorized_prompt =
-        Paint::NOTHING + FancyIrb.colorize(prompt, FancyIrb[:colorize, :input_prompt])
+        FancyIrb.colorize(prompt, FancyIrb[:colorize, :input_prompt])
 
       FancyIrb.append_input_color(colorized_prompt)
     end
