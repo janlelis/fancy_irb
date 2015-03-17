@@ -107,4 +107,17 @@ class << FancyIrb
   def get_cols_to_show_from_offset(offset)
     offset + @options[:rocket_prompt].size + @real_lengths[:output]
   end
+
+  # TODO testing and improving, e.g. getc does not contain "\n"
+  def register_height_trackers(object_class, methods_)
+    methods_.each{ |method_|
+      if object_class.respond_to? method_, true
+        object_class.send(:define_method, method_){ |*args|
+          res = super(*args)
+          FancyIrb.track_height res
+          res
+        }
+      end
+    }
+  end
 end

@@ -14,15 +14,4 @@ class << $stderr
   end
 end
 
-# TODO testing and improving, e.g. getc does not contain "\n"
-class << $stdin
-  FancyIrb::STDIN_HOOKS.each{ |m|
-    if $stdin.respond_to? m
-      define_method m do |*args|
-        res = super(*args)
-        FancyIrb.track_height res
-        res
-      end
-    end
-  }
-end
+FancyIrb.register_height_trackers $stdin.singleton_class, FancyIrb::STDIN_TRACK_HEIGHT_METHODS

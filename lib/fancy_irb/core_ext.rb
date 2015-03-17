@@ -6,16 +6,8 @@ FancyIrb::DEACTIVATE_ROCKET.each{ |m|
   })
 }
 
-# patch some input methods to track height
-class Object
-  private
-
-  def gets(*)
-    res = super
-    FancyIrb.track_height res
-    res
-  end
-end
+# patch some kernel methods to track height
+FancyIrb.register_height_trackers Object, FancyIrb::STDIN_TRACK_HEIGHT_METHODS
 
 # respect full-width chars
 if FancyIrb[:east_asian_width]
