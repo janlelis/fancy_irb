@@ -44,7 +44,7 @@ module FancyIrb
     :east_asian_width => false, # set to true if you have double-width characters (slower)
   }
 
-  DEACTIVATE_ROCKET = %w[
+  SKIP_ROCKET_METHODS = %w[
     system
     spawn
   ].map(&:to_sym)

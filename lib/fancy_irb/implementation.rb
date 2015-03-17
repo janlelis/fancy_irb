@@ -85,10 +85,6 @@ module FancyIrb
       1 + ( @height_counter == [0] ? 0 : @height_counter.reduce(:+) || 0 )
     end
 
-    def prepare_stream_data(data, color = nil)
-      @stdout_colorful ? Paint[data, *Array(color)] : data.to_s
-    end
-
     def colorize(string, color)
       Paint[string, *Array(color)]
     end
@@ -114,14 +110,34 @@ module FancyIrb
     # TODO testing and improving, e.g. getc does not contain "\n"
     def register_height_trackers(object_class, methods_)
       methods_.each{ |method_|
-        if object_class.respond_to? method_, true
-          object_class.send(:define_method, method_){ |*args|
+        if object_class.respond_to?(method_, true)
+          object_class.send :define_method, method_ do |*args|
             res = super(*args)
             FancyIrb.track_height(res)
             res
-          }
+          end
         end
       }
+    end
+
+    def register_skipped_rockets(object_class, methods_)
+      methods_.each{ |method_|
+        object_class.send :define_method, method_ do |*args|
+          FancyIrb.skip_next_rocket = true
+          super(*args)
+        end
+      }
+    end
+
+    def patch_stream(object, stream_name)
+      object.define_singleton_method :write do |data|
+        FancyIrb.track_height data
+        super FancyIrb.prepare_stream_data(data, FancyIrb[:colorize, stream_name])
+      end
+    end
+
+    def prepare_stream_data(data, color = nil)
+      @stdout_colorful ? Paint[data, *Array(color)] : data.to_s
     end
   end
 end

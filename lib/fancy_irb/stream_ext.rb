@@ -1,17 +1,6 @@
-class << $stdout
-  def write(data)
-    FancyIrb.track_height data
-    super FancyIrb.prepare_stream_data(data, FancyIrb[:colorize, :stdout])
-  end
-end
+# patch streams to track height & apply colors
+FancyIrb.patch_stream $stdout, :stdout
+FancyIrb.patch_stream $stderr, :stderr
 
-class << $stderr
-  def write(data)
-    FancyIrb.track_height data
-    super FancyIrb.prepare_stream_data(data, FancyIrb[:colorize, :stderr])
-  rescue Exception # catch fancy_irb errors
-    super data
-  end
-end
-
+# patch some $stdin methods to track height
 FancyIrb.register_height_trackers $stdin.singleton_class, FancyIrb::STDIN_TRACK_HEIGHT_METHODS

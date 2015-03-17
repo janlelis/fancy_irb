@@ -3,6 +3,7 @@
 * Internals partly refactored
 * Drop official support for Ruby 1
 * Don't depend on ansicon specifics for windows (use io/console)
+* Don't try to catch exception when printing to stderr
 
 == 0.7.3
 * Don't colorize stdout by default
