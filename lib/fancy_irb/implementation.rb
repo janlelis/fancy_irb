@@ -100,4 +100,13 @@ class << FancyIrb
       formatter[output].to_s
     }
   end
+
+  def get_offset_from_irb_scanner(irb_scanner)
+    last_line = irb_scanner.instance_variable_get(:@line).split("\n").last
+    1 + FancyIrb.real_lengths[:input_prompt] + (last_line ? last_line.display_size : 0)
+  end
+
+  def get_cols_to_show_from_offset(offset)
+    offset + FancyIrb[:rocket_prompt].size + FancyIrb.real_lengths[:output]
+  end
 end

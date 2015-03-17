@@ -4,24 +4,20 @@ module IRB
       output = FancyIrb.get_output_from_irb_context(@context)
 
       if FancyIrb[:rocket_mode] && !FancyIrb.skip_next_rocket
-        last_input = @scanner.instance_variable_get(:@line)
-        last_line_without_prompt = last_input.split("\n").last
-        offset =  FancyIrb.real_lengths[:input_prompt] + 1
-        offset += last_line_without_prompt.display_size if last_line_without_prompt
-
-        lines_to_show = FancyIrb.get_height
-        cols_to_show  = offset + FancyIrb[:rocket_prompt].size + FancyIrb.real_lengths[:output]
+        offset = FancyIrb.get_offset_from_irb_scanner(@scanner)
+        cols_to_show   = FancyIrb.get_cols_to_show_from_offset(offset)
+        lines_to_show  = FancyIrb.get_height
 
         if  FancyIrb::TerminalInfo.lines > lines_to_show &&
             FancyIrb::TerminalInfo.cols  > cols_to_show
           print \
             Paint::NOTHING +
-            FancyIrb::TerminalInfo::TPUT[:sc] +                   # save current cursor position
-            FancyIrb::TerminalInfo::TPUT[:cuu1] * lines_to_show + # move cursor upwards    to the original input line
-            FancyIrb::TerminalInfo::TPUT[:cuf1] * offset +        # move cursor rightwards to the original input offset
+            FancyIrb::TerminalInfo::TPUT[:sc] +                    # save current cursor position
+            FancyIrb::TerminalInfo::TPUT[:cuu1] * lines_to_show +  # move cursor upwards    to the original input line
+            FancyIrb::TerminalInfo::TPUT[:cuf1] * offset +         # move cursor rightwards to the original input offset
             FancyIrb.colorize(FancyIrb[:rocket_prompt], FancyIrb[:colorize, :rocket_prompt]) + # draw rocket prompt
-            output +                                              # draw output
-            FancyIrb::TerminalInfo::TPUT[:rc]                     # return to normal cursor position
+            output +                                               # draw output
+            FancyIrb::TerminalInfo::TPUT[:rc]                      # return to normal cursor position
           return
         end
       end
