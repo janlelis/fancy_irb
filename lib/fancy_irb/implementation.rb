@@ -70,12 +70,7 @@ class << FancyIrb
   end
 
   def track_height(data)
-    data       = Paint.unpaint(data.to_s)
-    lines      = data.count("\n")
-    long_lines = data.split("\n").inject(0){ |sum, line|
-      sum + (line.display_size / FancyIrb::TerminalInfo.cols)
-    }
-    @height_counter << lines + long_lines
+    @height_counter << FancyIrb::HeightDetector.run(data, FancyIrb::TerminalInfo.cols)
   end
 
   def get_height
@@ -114,7 +109,7 @@ class << FancyIrb
       if object_class.respond_to? method_, true
         object_class.send(:define_method, method_){ |*args|
           res = super(*args)
-          FancyIrb.track_height res
+          FancyIrb.track_height(res)
           res
         }
       end
