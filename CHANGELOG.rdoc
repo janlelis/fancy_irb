@@ -1,3 +1,6 @@
+== 0.8.0 (master)
+* Bump paint and unicode-display_width dependencies
+
 == 0.7.3
 * Don't colorize stdout by default
 * Deactivate rocket for common system commands

@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
   s.license = 'MIT'
   s.requirements = ['Windows: ansicon <https://github.com/adoxa/ansicon>']
-  s.add_dependency 'paint', '>= 0.8.1'
-  s.add_dependency 'unicode-display_width', ">= 0.1.1"
+  s.add_dependency 'paint', '>= 0.9.0'
+  s.add_dependency 'unicode-display_width', ">= 0.2.0"
   s.files = [
     "LICENSE",
     "README.rdoc",
