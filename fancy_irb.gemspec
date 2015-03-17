@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'paint', '>= 0.9.0'
   s.add_dependency 'unicode-display_width', ">= 0.2.0"
   s.files = [
-    "LICENSE",
+    "MIT-LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "CHANGELOG.rdoc",
