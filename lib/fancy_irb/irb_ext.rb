@@ -15,16 +15,14 @@ module IRB
             FancyIrb::TerminalInfo::TPUT[:sc] +                    # save current cursor position
             FancyIrb::TerminalInfo::TPUT[:cuu1] * lines_to_show +  # move cursor upwards    to the original input line
             FancyIrb::TerminalInfo::TPUT[:cuf1] * offset +         # move cursor rightwards to the original input offset
-            FancyIrb.colorize(FancyIrb[:rocket_prompt], FancyIrb[:colorize, :rocket_prompt]) + # draw rocket prompt
+            FancyIrb.colorize(FancyIrb[:rocket_prompt], :rocket_prompt) + # draw rocket prompt
             output +                                               # draw output
             FancyIrb::TerminalInfo::TPUT[:rc]                      # return to normal cursor position
           return
         end
       end
       FancyIrb.skip_next_rocket = false
-      puts \
-        FancyIrb.colorize(FancyIrb[:result_prompt], FancyIrb[:colorize, :result_prompt]) +
-        output
+      puts FancyIrb.colorize(FancyIrb[:result_prompt], :result_prompt) + output
     end
 
     # colorize prompt & input
@@ -35,10 +33,7 @@ module IRB
       FancyIrb.track_indent! if args[0] == IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C]
       FancyIrb.set_input_prompt_size(prompt, @scanner)
 
-      colorized_prompt =
-        FancyIrb.colorize(prompt, FancyIrb[:colorize, :input_prompt])
-
-      FancyIrb.append_input_color(colorized_prompt)
+      FancyIrb.append_input_color(FancyIrb.colorize(prompt, :input_prompt))
     end
 
     # reset line and capture IRB errors (part 2)

@@ -89,8 +89,8 @@ module FancyIrb
       1 + ( @height_counter == [0] ? 0 : @height_counter.reduce(:+) || 0 )
     end
 
-    def colorize(string, color)
-      Paint::NOTHING + Paint[string, *Array(color)]
+    def colorize(string, colorize_key)
+      Paint::NOTHING + Paint[string, *Array(@options[:colorize][colorize_key])]
     end
 
     # Note: No reset, relies on next one
@@ -145,7 +145,7 @@ module FancyIrb
     def patch_stream(object, stream_name)
       object.define_singleton_method :write do |data|
         FancyIrb.track_height data
-        super FancyIrb.colorize(data, FancyIrb[:colorize, stream_name])
+        super FancyIrb.colorize(data, stream_name)
       end
     end
 
@@ -158,7 +158,7 @@ module FancyIrb
         @error_capturer.restore_original_stdout
         $stderr.puts colorize(
           @error_capturer.error_string.chomp,
-          @options[:colorize][:irb_errors],
+          :irb_errors,
         )
         @error_capturer = nil
       end
