@@ -75,7 +75,8 @@ class << FancyIrb
           }
         end
       else
-        @options[key] = user_options.has_key?(key) ? user_options[key] : default_options[key]
+        @options[key] =
+            user_options.has_key?(key) ? user_options[key] : default_options[key]
       end
     }
 
@@ -111,7 +112,9 @@ class << FancyIrb
   end
 
   def write_stream(stream, data, color = nil)
-    stream.write_non_fancy( FancyIrb.stdout_colorful ? Paint[data, *Array(color)] : data.to_s )
+    stream.write_non_fancy(
+      FancyIrb.stdout_colorful ? Paint[data, *Array(color)] : data.to_s
+    )
   end
 
   def colorize(string, color)

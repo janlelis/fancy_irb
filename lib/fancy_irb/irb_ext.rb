@@ -58,13 +58,18 @@ module IRB
 
       # this is kinda hacky... but that's irb °_°
       indents = @scanner.indent*2
-      FancyIrb.continue = true if args[0] == IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C]
-      indents += 2 if FancyIrb.continue
+      if args[0] == IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C]
+        FancyIrb.continue = true
+      end
+      if FancyIrb.continue
+        indents += 2
+      end
       FancyIrb.real_lengths[:input_prompt] = prompt.size + indents
 
       colorized_prompt = FancyIrb.colorize prompt, FancyIrb[:colorize, :input_prompt]
       if input_color = FancyIrb[:colorize, :input]
-        colorized_prompt + Paint.color(*Array(input_color)) # NOTE: No reset, relies on next one
+        # NOTE: No reset, relies on next one
+        colorized_prompt + Paint.color(*Array(input_color))
       else
         colorized_prompt
       end
