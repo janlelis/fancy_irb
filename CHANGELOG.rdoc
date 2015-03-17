@@ -1,8 +1,9 @@
 == 0.8.0 (master)
-* Bump paint and unicode-display_width dependencies
 * Internals partly refactored
+* Bump paint and unicode-display_width dependencies
 * Drop official support for Ruby 1
 * Don't depend on ansicon specifics for windows (use io/console)
+* Also patch input methods for ARGF
 * Don't try to catch exception when printing to stderr
 
 == 0.7.3
