@@ -18,7 +18,6 @@ module FancyIrb
   }
 
   DEFAULT_COLORIZER_PROC = proc{ |value|
-    FancyIrb.real_lengths[:output] =    value.size
     if defined?(Wirb) && FancyIrb[:colorize, :output]
       Wirb.colorize_result value
     else

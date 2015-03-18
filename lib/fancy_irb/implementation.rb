@@ -2,7 +2,6 @@ module FancyIrb
   class << self
     attr_reader :options
     attr_reader :error_capturer
-    attr_accessor :real_lengths
     attr_accessor :skip_next_rocket
 
     def start(user_options = {})
@@ -104,10 +103,12 @@ module FancyIrb
 
     # get_result and pass it into every format_output_proc
     def get_output_from_irb_context(irb_context)
+      result = @options[:result_proc][irb_context]
+      @real_lengths[:output] = result.size
       Array(@options[:output_procs]).inject(
-        @options[:result_proc][irb_context]
-      ){ |output, formatter|
-        formatter[output].to_s
+        result
+      ){ |output, output_proc|
+        output_proc[output].to_s
       }
     end
 

@@ -69,7 +69,6 @@ You can modify how to get and display the input. The <tt>result_proc</tt> is a p
 === Default colorizer_proc
 
   DEFAULT_COLORIZER_PROC = proc{ |value|
-    FancyIrb.real_lengths[:output] =    value.size
     if defined?(Wirb) && FancyIrb[:colorize, :output]
       Wirb.colorize_result value
     else
