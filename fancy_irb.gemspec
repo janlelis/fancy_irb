@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Jan Lelis"]
   s.email       = "mail@janlelis.de"
   s.homepage    = "http://github.com/janlelis/fancy_irb"
-  s.summary     = "FancyIrb patches your IRB to create a smooth output experience."
-  s.description = "FancyIrb patches your IRB to create a smooth output experience. You can colorize the prompts, irb errors, stderr and stdout, output your result as #=> (hash rockets) and some other improvements."
+  s.summary     = "FancyIrb makes IRB friendly."
+  s.description = "FancyIrb makes IRB # => friendly."
   s.required_ruby_version = '>= 1.9.3'
   s.license = 'MIT'
   s.requirements = ['Windows: ansicon <https://github.com/adoxa/ansicon>']
