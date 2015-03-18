@@ -18,7 +18,7 @@ module FancyIrb
   }
 
   DEFAULT_COLORIZER_PROC = proc{ |value|
-    if defined?(Wirb) && FancyIrb[:colorize, :output]
+    if defined?(Wirb)
       Wirb.colorize_result value
     else
       value
@@ -29,7 +29,10 @@ module FancyIrb
     :rocket_mode     => true,   # activate or deactivate #=> rocket output
     :rocket_prompt   => '#=> ', # prompt to use for the rocket
     :result_prompt   => '=> ',  # prompt to use for normal output
-    :colorize => {              # colors hash. Set to nil to deactivate colorizing
+    :result_proc     => DEFAULT_RESULT_PROC,       # how to get the output result from IRB
+    :output_procs    => [DEFAULT_COLORIZER_PROC],  # output formatter procs
+    :east_asian_width => false, # set to true if you have double-width characters (slower)
+    :colorize => {              # colors hash. Set to nil to deactivate colors
       :rocket_prompt => [:blue],
       :result_prompt => [:blue],
       :input_prompt  => nil,
@@ -37,11 +40,7 @@ module FancyIrb
       :stderr        => [:red, :bright],
       :stdout        => nil,
       :input         => nil,
-      :output        => true, # wirb's output colorization
      },
-    :result_proc     => DEFAULT_RESULT_PROC,       # how to get the output result
-    :output_procs    => [DEFAULT_COLORIZER_PROC],  # you can modify/enhance/log your output
-    :east_asian_width => false, # set to true if you have double-width characters (slower)
   }
 
   SKIP_ROCKET_METHODS = %w[

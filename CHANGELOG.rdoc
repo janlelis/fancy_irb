@@ -5,6 +5,7 @@
 * Don't depend on ansicon specifics for windows (use io/console)
 * Also patch input methods for ARGF
 * Don't try to catch exception when printing to stderr
+* Remove [:colorizer][:output] option
 
 == 0.7.3
 * Don't colorize stdout by default

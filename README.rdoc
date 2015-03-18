@@ -16,19 +16,18 @@ You can pass an options hash. These are the default values:
     :rocket_mode     => true,   # activate or deactivate #=> rocket output
     :rocket_prompt   => '#=> ', # prompt to use for the rocket
     :result_prompt   => '=> ',  # prompt to use for normal output
-    :colorize => {              # colors hash. Set to nil to deactivate colorizing
+    :result_proc     => DEFAULT_RESULT_PROC,       # how to get the output result from IRB
+    :output_procs    => [DEFAULT_COLORIZER_PROC],  # output formatter procs
+    :east_asian_width => false, # set to true if you have double-width characters (slower)
+    :colorize => {              # colors hash. Set to nil to deactivate colors
       :rocket_prompt => [:blue],
       :result_prompt => [:blue],
       :input_prompt  => nil,
-      :irb_errors    => [:red],
+      :irb_errors    => [:red, :clean],
       :stderr        => [:red, :bright],
       :stdout        => nil,
       :input         => nil,
-      :output        => true, # wirb's output colorization
      },
-    :result_proc     => DEFAULT_RESULT_PROC,       # how to get the output result (see below)
-    :output_procs    => [DEFAULT_COLORIZER_PROC],  # you can modify/enhance/log your output
-    :east_asian_width => false, # set to true if you have double-width characters (slower)
   }
 
 Rocket mode means: Output result as comment if there is enough space left on the terminal line and +stdout+ does not output more than the current terminal height.
@@ -69,7 +68,7 @@ You can modify how to get and display the input. The <tt>result_proc</tt> is a p
 === Default colorizer_proc
 
   DEFAULT_COLORIZER_PROC = proc{ |value|
-    if defined?(Wirb) && FancyIrb[:colorize, :output]
+    if defined?(Wirb)
       Wirb.colorize_result value
     else
       value
