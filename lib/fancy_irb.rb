@@ -49,7 +49,7 @@ module FancyIrb
   ].map(&:to_sym)
 
   # TODO: each_byte, each_char, each_codepoint, each, etc
-  STDIN_TRACK_HEIGHT_METHODS = %w[
+  TRACK_HEIGHT_INPUT_METHODS = %w[
     binread
     read
     gets
@@ -61,10 +61,6 @@ module FancyIrb
     readlines
     readpartial
     sysread
-  ].map(&:to_sym)
-
-  KERNEL_TRACK_HEIGHT_METHODS = %w[
-    gets
   ].map(&:to_sym)
 end
 
