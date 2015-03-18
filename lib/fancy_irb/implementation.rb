@@ -122,10 +122,10 @@ module FancyIrb
     end
 
     # TODO testing and improving, e.g. getc does not contain "\n"
-    def register_height_trackers(object_class, methods_)
+    def register_height_trackers(object, methods_)
       methods_.each{ |method_|
-        if object_class.respond_to?(method_, true)
-          object_class.send :define_method, method_ do |*args|
+        if object.respond_to?(method_)
+          object.send :define_singleton_method, method_ do |*args|
             res = super(*args)
             FancyIrb.track_height(res)
             res
