@@ -3,11 +3,11 @@ require 'io/console'
 module FancyIrb
   module TerminalInfo
     def self.lines
-      STDIN.winsize[0]
+      STDOUT.winsize[0]
     end
 
     def self.cols
-      STDIN.winsize[1]
+      STDOUT.winsize[1]
     end
 
     if RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
