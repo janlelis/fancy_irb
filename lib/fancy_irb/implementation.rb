@@ -63,12 +63,11 @@ module FancyIrb
       @indent = false
     end
 
-    def track_indent!
-      @indent = true
-    end
-
-    def set_input_prompt_size(prompt, irb_scanner)
+    def handle_prompt(prompt, irb_scanner, is_indented)
+      @indent = true if is_indented
       @current_indent = width_of(prompt) + irb_scanner.indent * 2 + ( @indent ? 2 : 0 )
+
+      append_input_color colorize(prompt, :input_prompt)
     end
 
     def track_height(data)
@@ -92,8 +91,8 @@ module FancyIrb
       end
     end
 
-    def get_output_from_irb_context(irb_context)
-      irb_context.inspect_last_value
+    def output_value(context, scanner)
+      show_output(context.inspect_last_value, scanner)
     end
 
     def show_output(output, scanner)
