@@ -17,9 +17,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'unicode-display_width', ">= 0.2.0"
   s.files = [
     "MIT-LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
-    "CHANGELOG.rdoc",
+    "CHANGELOG.md",
     "fancy_irb.gemspec",
     "lib/fancy_irb.rb",
     "lib/fancy_irb/irb_ext.rb",
