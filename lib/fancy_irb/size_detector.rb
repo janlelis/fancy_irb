@@ -1,6 +1,9 @@
 module FancyIrb
   module SizeDetector
-    def self.width_of(data)
+    extend self
+
+    def width_of(data)
+      data = Paint.unpaint data.to_s
       if FancyIrb[:east_asian_width]
         data.display_size
       else
@@ -8,8 +11,7 @@ module FancyIrb
       end
     end
 
-    def self.height_of(data, width)
-      data       = Paint.unpaint(data.to_s)
+    def height_of(data, width)
       lines      = data.count("\n")
       long_lines = data.split("\n").inject(0){ |sum, line|
         sum + (width_of(line) / width)
