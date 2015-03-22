@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.3'
   s.license = 'MIT'
   s.requirements = ['Windows: ansicon <https://github.com/adoxa/ansicon>']
-  s.add_dependency 'paint', '= 1.0.0.pre'
+  s.add_dependency 'paint', '>= 0.9', '< 2.0'
   s.add_dependency 'unicode-display_width', ">= 0.2.0"
   s.files = [
     "MIT-LICENSE.txt",
