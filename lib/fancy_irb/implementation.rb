@@ -91,9 +91,31 @@ module FancyIrb
       end
     end
 
-    # get_result and pass it into every format_output_proc
     def get_output_from_irb_context(irb_context)
       irb_context.inspect_last_value
+    end
+
+    def show_output(output, scanner)
+      if @options[:rocket_mode] && !@skip_next_rocket
+        offset = get_offset_from_irb_scanner(scanner)
+        cols_to_show   = get_cols_to_show_from_offset(offset)
+        lines_to_show  = get_height
+
+        if  FancyIrb::TerminalInfo.lines > lines_to_show &&
+            FancyIrb::TerminalInfo.cols  > cols_to_show
+          print \
+            Paint::NOTHING +
+            FancyIrb::TerminalInfo::TPUT[:sc] +                    # save current cursor position
+            FancyIrb::TerminalInfo::TPUT[:cuu1] * lines_to_show +  # move cursor upwards    to the original input line
+            FancyIrb::TerminalInfo::TPUT[:cuf1] * offset +         # move cursor rightwards to the original input offset
+            colorize(@options[:rocket_prompt], :rocket_prompt) +   # draw rocket prompt
+            output +                                               # draw output
+            FancyIrb::TerminalInfo::TPUT[:rc]                      # return to normal cursor position
+          return
+        end
+      end
+      @skip_next_rocket = false
+      puts colorize(@options[:result_prompt], :result_prompt) + output
     end
 
     def get_offset_from_irb_scanner(irb_scanner)
