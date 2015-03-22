@@ -59,7 +59,11 @@ You can modify how to get and display the input. The <tt>result_proc</tt> is a p
 
   DEFAULT_RESULT_PROC = proc{ |context|
     if context.inspect?
-      context.last_value.inspect
+      if defined?(context.last_value.inspect)
+        context.last_value.inspect
+      else
+        "(Object doesn't support #inspect)"
+      end
     else
       context.last_value
     end

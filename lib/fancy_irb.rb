@@ -11,7 +11,11 @@ require_relative 'fancy_irb/implementation'
 module FancyIrb
   DEFAULT_RESULT_PROC = proc{ |context|
     if context.inspect?
-      context.last_value.inspect
+      if defined?(context.last_value.inspect)
+        context.last_value.inspect
+      else
+        "(Object doesn't support #inspect)"
+      end
     else
       context.last_value
     end

@@ -1,3 +1,6 @@
+== 0.8.2
+* Support objects that don't support #inspect
+
 == 0.8.1
 * Use io/console correctly, fixes bug on mingw
 
