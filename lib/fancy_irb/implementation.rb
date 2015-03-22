@@ -24,7 +24,7 @@ module FancyIrb
 
     def set_defaults
       @skip_next_rocket = false
-      @real_lengths     = { :output => 1, :input_prompt => Float::INFINITY }
+      @current_indent = Float::INFINITY
 
       @options = DEFAULT_OPTIONS.dup
       @options[:colorize] = @options[:colorize].dup if @options[:colorize]
@@ -68,8 +68,7 @@ module FancyIrb
     end
 
     def set_input_prompt_size(prompt, irb_scanner)
-      @real_lengths[:input_prompt] =
-        prompt.size + irb_scanner.indent * 2 + ( @indent ? 2 : 0 )
+      @current_indent = width_of(prompt) + irb_scanner.indent * 2 + ( @indent ? 2 : 0 )
     end
 
     def track_height(data)
@@ -100,7 +99,7 @@ module FancyIrb
     def show_output(output, scanner)
       if @options[:rocket_mode] && !@skip_next_rocket
         offset = get_offset_from_irb_scanner(scanner)
-        cols_to_show   = get_cols_to_show_from_offset(offset)
+        cols_to_show   = get_cols_to_show_from_output_and_offset(output, offset)
         lines_to_show  = get_height
 
         if  FancyIrb::TerminalInfo.lines > lines_to_show &&
@@ -122,11 +121,11 @@ module FancyIrb
 
     def get_offset_from_irb_scanner(irb_scanner)
       last_line = irb_scanner.instance_variable_get(:@line).split("\n").last
-      1 + @real_lengths[:input_prompt] + (last_line ? width_of(last_line) : 0)
+      1 + @current_indent + width_of(last_line)
     end
 
-    def get_cols_to_show_from_offset(offset)
-      offset + @options[:rocket_prompt].size + @real_lengths[:output]
+    def get_cols_to_show_from_output_and_offset(output, offset)
+      offset + width_of(@options[:rocket_prompt] + output)
     end
 
     # TODO testing and improving, e.g. getc does not contain "\n"

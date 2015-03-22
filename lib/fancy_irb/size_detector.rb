@@ -3,17 +3,15 @@ module FancyIrb
     extend self
 
     def width_of(data)
+      return 0 unless data
       data = Paint.unpaint data.to_s
-      if FancyIrb[:east_asian_width]
-        data.display_size
-      else
-        data.size
-      end
+      FancyIrb[:east_asian_width] ? data.display_size : data.size
     end
 
     def height_of(data, width)
-      lines      = data.count("\n")
-      long_lines = data.split("\n").inject(0){ |sum, line|
+      data_split = data.to_s.split("\n")
+      lines      = data_split.size - 1
+      long_lines = data_split.inject(0){ |sum, line|
         sum + (width_of(line) / width)
       }
       lines + long_lines
