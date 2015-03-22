@@ -9,32 +9,10 @@ require_relative 'fancy_irb/error_capturer'
 require_relative 'fancy_irb/implementation'
 
 module FancyIrb
-  DEFAULT_RESULT_PROC = proc{ |context|
-    if context.inspect?
-      if defined?(context.last_value.inspect)
-        context.last_value.inspect
-      else
-        "(Object doesn't support #inspect)"
-      end
-    else
-      context.last_value
-    end
-  }
-
-  DEFAULT_COLORIZER_PROC = proc{ |value|
-    if defined?(Wirb)
-      Wirb.colorize_result value
-    else
-      value
-    end
-  }
-
   DEFAULT_OPTIONS = {
     :rocket_mode     => true,   # activate or deactivate #=> rocket output
     :rocket_prompt   => '#=> ', # prompt to use for the rocket
     :result_prompt   => '=> ',  # prompt to use for normal output
-    :result_proc     => DEFAULT_RESULT_PROC,       # how to get the output result from IRB
-    :output_procs    => [DEFAULT_COLORIZER_PROC],  # output formatter procs
     :east_asian_width => false, # set to true if you have double-width characters (slower)
     :colorize => {              # colors hash. Set to nil to deactivate colors
       :rocket_prompt => [:blue],

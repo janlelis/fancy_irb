@@ -9,7 +9,6 @@ module FancyIrb
       apply_user_options(user_options)
       reset_line!
       extend!
-
       true
     end
 
@@ -57,15 +56,6 @@ module FancyIrb
       end
     end
 
-    def add_output_proc(prepend = false, &proc)
-      action = prepend ? :unshift : :push
-      @options[:output_procs].send action, proc
-    end
-
-    def set_result_proc(&proc)
-      @options[:result_proc] = proc
-    end
-
     def reset_line!
       @height_counter = []
       @indent = false
@@ -103,13 +93,7 @@ module FancyIrb
 
     # get_result and pass it into every format_output_proc
     def get_output_from_irb_context(irb_context)
-      result = @options[:result_proc][irb_context]
-      @real_lengths[:output] = result.size
-      Array(@options[:output_procs]).inject(
-        result
-      ){ |output, output_proc|
-        output_proc[output].to_s
-      }
+      irb_context.inspect_last_value
     end
 
     def get_offset_from_irb_scanner(irb_scanner)
