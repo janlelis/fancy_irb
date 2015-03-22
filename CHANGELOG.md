@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.0.0.pre
+* ...
+
 ## 0.8.2
 * Support objects that don't support #inspect
 
