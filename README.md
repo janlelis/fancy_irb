@@ -47,11 +47,6 @@ When using double-width unicode chars, you should set `:east_asian_width` to
 Not all stdin methods are patched properly to work with the rocket: The gems
 focuses on the often used ones
 
-## TODO
-*   Refactor to modern code
-*   Just count string lengths without ansi escape sequences (would be more
-    flexible than remembering)
-
 
 ## J-_-L
 Inspired by the irb_rocket gem by genki.
