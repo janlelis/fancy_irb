@@ -1,8 +1,10 @@
 # CHANGELOG
 
 ## 1.0.0.pre
-* Remove :result_proc and :output_procs options. Please use `IRB::Inspector.def_inspector` if you need this feature
 * More tidying behind the scenes
+* Remove :result_proc and :output_procs options. Please use `IRB::Inspector.def_inspector` if you need this feature
+* Recognize multi-line regexes
+
 
 ## 0.8.2
 * Support objects that don't support #inspect

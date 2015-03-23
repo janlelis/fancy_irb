@@ -87,12 +87,12 @@ module FancyIrb
     end
 
     def show_output(output, scanner)
-      if @options[:rocket_mode] && !@skip_next_rocket
+      if @options[:rocket_mode] && !@skip_next_rocket && !output.include?("\n")
         offset = get_offset_from_irb_scanner(scanner)
         cols_to_show  = get_cols_to_show_from_output_and_offset(output, offset)
         lines_to_show = @tracked_height + 1
 
-        if  TerminalInfo.lines > lines_to_show && TerminalInfo.cols  > cols_to_show
+        if TerminalInfo.lines > lines_to_show && TerminalInfo.cols > cols_to_show
           print \
             Paint::NOTHING +
             TerminalInfo::TPUT[:sc] +                    # save current cursor position
