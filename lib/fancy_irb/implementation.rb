@@ -2,7 +2,6 @@ module FancyIrb
   extend SizeDetector
 
   class << self
-    attr_reader :options
     attr_reader :error_capturer
     attr_accessor :skip_next_rocket
 
@@ -50,12 +49,8 @@ module FancyIrb
       }
     end
 
-    def [](key, key2 = nil)
-      if key2
-        @options[key][key2]
-      else
-        @options[key]
-      end
+    def east_asian_width?
+      @options[:east_asian_width]
     end
 
     def reset_line!
@@ -94,19 +89,18 @@ module FancyIrb
     def show_output(output, scanner)
       if @options[:rocket_mode] && !@skip_next_rocket
         offset = get_offset_from_irb_scanner(scanner)
-        cols_to_show   = get_cols_to_show_from_output_and_offset(output, offset)
-        lines_to_show  = @tracked_height + 1
+        cols_to_show  = get_cols_to_show_from_output_and_offset(output, offset)
+        lines_to_show = @tracked_height + 1
 
-        if  FancyIrb::TerminalInfo.lines > lines_to_show &&
-            FancyIrb::TerminalInfo.cols  > cols_to_show
+        if  TerminalInfo.lines > lines_to_show && TerminalInfo.cols  > cols_to_show
           print \
             Paint::NOTHING +
-            FancyIrb::TerminalInfo::TPUT[:sc] +                    # save current cursor position
-            FancyIrb::TerminalInfo::TPUT[:cuu1] * lines_to_show +  # move cursor upwards    to the original input line
-            FancyIrb::TerminalInfo::TPUT[:cuf1] * offset +         # move cursor rightwards to the original input offset
+            TerminalInfo::TPUT[:sc] +                    # save current cursor position
+            TerminalInfo::TPUT[:cuu1] * lines_to_show +  # move cursor upwards    to the original input line
+            TerminalInfo::TPUT[:cuf1] * offset +         # move cursor rightwards to the original input offset
             colorize(@options[:rocket_prompt], :rocket_prompt) +   # draw rocket prompt
             output +                                               # draw output
-            FancyIrb::TerminalInfo::TPUT[:rc]                      # return to normal cursor position
+            TerminalInfo::TPUT[:rc]                      # return to normal cursor position
           return
         end
       end
@@ -153,7 +147,7 @@ module FancyIrb
     end
 
     def register_error_capturer!
-      @error_capturer = FancyIrb::ErrorCapturer.new
+      @error_capturer = ErrorCapturer.new
     end
 
     def present_and_clear_captured_error!
