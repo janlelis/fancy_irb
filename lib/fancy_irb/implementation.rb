@@ -59,7 +59,7 @@ module FancyIrb
     end
 
     def reset_line!
-      @height_counter = []
+      @tracked_height = 0
       @indent = false
     end
 
@@ -71,11 +71,7 @@ module FancyIrb
     end
 
     def track_height(data)
-      @height_counter << height_of(data, TerminalInfo.cols)
-    end
-
-    def get_height
-      1 + ( @height_counter == [0] ? 0 : @height_counter.reduce(:+) || 0 )
+      @tracked_height += height_of(data, TerminalInfo.cols)
     end
 
     def colorize(string, colorize_key)
@@ -99,7 +95,7 @@ module FancyIrb
       if @options[:rocket_mode] && !@skip_next_rocket
         offset = get_offset_from_irb_scanner(scanner)
         cols_to_show   = get_cols_to_show_from_output_and_offset(output, offset)
-        lines_to_show  = get_height
+        lines_to_show  = @tracked_height + 1
 
         if  FancyIrb::TerminalInfo.lines > lines_to_show &&
             FancyIrb::TerminalInfo.cols  > cols_to_show
