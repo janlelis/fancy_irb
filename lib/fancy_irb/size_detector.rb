@@ -9,10 +9,11 @@ module FancyIrb
     end
 
     def height_of(data, width)
-      data_split = data.to_s.split("\n")
-      lines      = data_split.size
-      long_lines = data_split.inject(0){ |sum, line| sum + (width_of(line) / width) }
-      lines + long_lines
+      data = data.to_s
+      long_lines = data.split("\n").inject(0){ |sum, line|
+        sum + width_of(line) / (width + 1)
+      }
+      data.count("\n") + long_lines
     end
   end
 end

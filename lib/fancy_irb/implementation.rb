@@ -90,7 +90,7 @@ module FancyIrb
       if @options[:rocket_mode] && !@skip_next_rocket && !output.include?("\n")
         offset = get_offset_from_irb_scanner(scanner)
         cols_to_show  = get_cols_to_show_from_output_and_offset(output, offset)
-        lines_to_show = @tracked_height + 1
+        lines_to_show = 1 + @tracked_height
 
         if TerminalInfo.lines > lines_to_show && TerminalInfo.cols > cols_to_show
           print \

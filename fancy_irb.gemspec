@@ -32,6 +32,8 @@ Gem::Specification.new do |s|
     "lib/fancy_irb/core_ext.rb",
     "lib/fancy_irb/clean_up.rb",
     "lib/fancy_irb/version.rb",
+    "spec/size_detector_spec.rb",
+    "spec/fixtures.rb",
   ]
 end
 

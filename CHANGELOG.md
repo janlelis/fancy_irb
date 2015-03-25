@@ -4,6 +4,7 @@
 * More tidying behind the scenes
 * Remove :result_proc and :output_procs options. Please use `IRB::Inspector.def_inspector` if you need this feature
 * Recognize multi-line regexes
+* Improve size detector (-> less wrongly placed rockets)
 
 
 ## 0.8.2
