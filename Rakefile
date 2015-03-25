@@ -28,3 +28,5 @@ task :gemspec do
   gemspec.validate
 end
 
+# RSpec Task
+desc("Run specs"); task(:spec){sh "rspec"}; task(default: :spec)
