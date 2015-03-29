@@ -1,6 +1,8 @@
 module FancyIrb
   extend SizeDetector
 
+  @error_capturer = nil
+
   class << self
     attr_reader :error_capturer
     attr_accessor :skip_next_rocket
