@@ -1,4 +1,4 @@
-# FancyIrb
+# FancyIrb [![version](https://badge.fury.io/rb/fancy_irb.svg)](http://badge.fury.io/rb/fancy_irb)
 
 *   Colorizes IRB prompts, errors, `$stderr` and `$stdout`
 *   Uses "Hash Rockets" (# =>) to display IRB results
