@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.0.1
+* Fix that unicode-display_width was not used properly
+
 ## 1.0.0
 * More tidying behind the scenes
 * Remove :result_proc and :output_procs options. Please use `IRB::Inspector.def_inspector` if you need this feature

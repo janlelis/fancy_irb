@@ -17,7 +17,7 @@ module FancyIrb
 
     # hook into IRB
     def extend!
-      require 'unicode/display_size' if @options[:east_asian_width]
+      require 'unicode/display_width' if @options[:east_asian_width]
       require_relative 'irb_ext'
       require_relative 'core_ext'
       require_relative 'clean_up'

@@ -28,7 +28,7 @@ describe FancyIrb::SizeDetector do
 
     context "east_asian_width? true" do
       before do
-        require 'unicode/display_size'
+        require 'unicode/display_width'
         FancyIrb.instance_variable_set(:@options, {east_asian_width: true})
       end
 
