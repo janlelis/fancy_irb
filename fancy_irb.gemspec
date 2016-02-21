@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
     "fancy_irb.gemspec",
     "lib/fancy_irb.rb",
     "lib/fancy_irb/irb_ext.rb",
