@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.license = 'MIT'
   s.requirements = ['Windows: ansicon <https://github.com/adoxa/ansicon>']
   s.add_dependency 'paint', '>= 0.9', '< 2.0'
-  s.add_dependency 'unicode-display_width', "~> 0.3.1"
+  s.add_dependency 'unicode-display_width', "~> 1.0"
   s.add_development_dependency 'rspec', "~> 3.2"
   s.add_development_dependency 'rake', "~> 10.4"
   s.files = [

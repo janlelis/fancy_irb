@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.0.2
+* Bump unicode-display_width to 1.0
+
 ## 1.0.1
 * Fix that unicode-display_width was not used properly
 
