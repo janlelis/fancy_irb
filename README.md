@@ -12,11 +12,12 @@
 You can pass an options hash. These are the default values:
 
     DEFAULT_OPTIONS = {
-      :rocket_mode     => true,   # activate or deactivate #=> rocket
-      :rocket_prompt   => '#=> ', # prompt to use for the rocket
-      :result_prompt   => '=> ',  # prompt to use for normal output
-      :east_asian_width => false, # set to true if you have double-width characters (slower)
-      :colorize => {              # colors hash. Set to nil to deactivate colors
+      :rocket_mode     => true,       # activate or deactivate #=> rocket
+      :rocket_prompt   => '#=> ',     # prompt to use for the rocket
+      :result_prompt   => '=> ',      # prompt to use for normal output
+      :unicode_display_width => true, # set to false if you don't want to check for proper
+                                      # string width for better performance
+      :colorize => {                  # colors hash. Set to nil to deactivate colors
         :rocket_prompt => [:blue],
         :result_prompt => [:blue],
         :input_prompt  => nil,
@@ -39,11 +40,12 @@ documentation](https://github.com/janlelis/paint).
 ### Windows Support
 You will need [ansicon](https://github.com/adoxa/ansicon) or [ConEmu](https://code.google.com/p/conemu-maximus5/).
 
-### Wrong display widths?
-When using double-width unicode chars, you should set `:east_asian_width` to
-`true`. It is not activated by default, because of its performance impact.
+### Need More Performance?
+The gem checks for the Unicode display width of characters, which requires a
+lookup of every character. You can deactivate this check by setting
+ `:unicode_display_width` to `false`.
 
-### Known bugs
+### Known Bugs
 Not all stdin methods are patched properly to work with the rocket: The gems
 focuses on the often used ones
 
@@ -51,5 +53,5 @@ focuses on the often used ones
 ## J-_-L
 Inspired by the irb_rocket gem by genki.
 
-Copyright (c) 2010-2012, 2015 Jan Lelis <http://janlelis.com> released under
+Copyright (c) 2010-2012, 2015-2016 Jan Lelis <http://janlelis.com> released under
 the MIT license.

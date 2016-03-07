@@ -5,9 +5,8 @@ describe FancyIrb::SizeDetector do
   include FancyIrb::SizeDetector
 
   before do
-    FancyIrb.instance_variable_set(:@options, {east_asian_width: false})
+    FancyIrb.instance_variable_set(:@options, { unicode_display_width: true })
   end
-
 
   describe ".width_of" do
     it "returns 0 when no data given" do
@@ -22,18 +21,17 @@ describe FancyIrb::SizeDetector do
       expect( width_of("\e[31mstring\e[0m") ).to eq 6
     end
 
-    it "does not respect double-width chars by default" do
-      expect( width_of('一') ).to eq 1
+    it "respects double-width chars by default" do
+      expect( width_of('一') ).to eq 2
     end
 
-    context "east_asian_width? true" do
+    context "unicode_display_width? false" do
       before do
-        require 'unicode/display_width'
-        FancyIrb.instance_variable_set(:@options, {east_asian_width: true})
+        FancyIrb.instance_variable_set(:@options, { unicode_display_width: false })
       end
 
-      it "respects double-width chars" do
-        expect( width_of('一') ).to eq 2
+      it "does not respect double-width chars" do
+        expect( width_of('一') ).to eq 1
       end
     end
   end

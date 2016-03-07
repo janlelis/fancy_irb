@@ -17,7 +17,6 @@ module FancyIrb
 
     # hook into IRB
     def extend!
-      require 'unicode/display_width' if @options[:east_asian_width]
       require_relative 'irb_ext'
       require_relative 'core_ext'
       require_relative 'clean_up'
@@ -51,9 +50,10 @@ module FancyIrb
       }
     end
 
-    def east_asian_width?
-      @options[:east_asian_width]
+    def unicode_display_width?
+      @options[:unicode_display_width] || @options[:east_asian_width]
     end
+    alias east_asian_width? unicode_display_width?
 
     def reset_line!
       @tracked_height = 0

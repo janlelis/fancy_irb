@@ -2,6 +2,7 @@ require_relative 'fancy_irb/version'
 
 require 'stringio'
 require 'paint'
+require 'unicode/display_width'
 
 require_relative 'fancy_irb/terminal_info'
 require_relative 'fancy_irb/size_detector'
@@ -10,11 +11,12 @@ require_relative 'fancy_irb/implementation'
 
 module FancyIrb
   DEFAULT_OPTIONS = {
-    :rocket_mode     => true,   # activate or deactivate #=> rocket output
-    :rocket_prompt   => '#=> ', # prompt to use for the rocket
-    :result_prompt   => '=> ',  # prompt to use for normal output
-    :east_asian_width => false, # set to true if you have double-width characters (slower)
-    :colorize => {              # colors hash. Set to nil to deactivate colors
+    :rocket_mode     => true,       # activate or deactivate #=> rocket output
+    :rocket_prompt   => '#=> ',     # prompt to use for the rocket
+    :result_prompt   => '=> ',      # prompt to use for normal output
+    :unicode_display_width => true, # set to false if you don't want to check for proper
+                                    # string width for better performance
+    :colorize => {                  # colors hash. Set to nil to deactivate colors
       :rocket_prompt => [:blue],
       :result_prompt => [:blue],
       :input_prompt  => nil,

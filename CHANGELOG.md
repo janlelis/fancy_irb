@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.1.0
+* Rename `east_asian_width` option to `unicode_display_width` and activate by default
+
 ## 1.0.2
 * Bump unicode-display_width to 1.0
 
@@ -12,14 +15,11 @@
 * Recognize multi-line regexes
 * Improve size detector (-> less wrongly placed rockets)
 
-
 ## 0.8.2
 * Support objects that don't support #inspect
 
-
 ## 0.8.1
 * Use io/console correctly, fixes bug on mingw
-
 
 ## 0.8.0
 * Internals partly refactored
@@ -32,28 +32,22 @@
 * Not patching Kernel anymore
 * Only path String if east_asian_width option is used
 
-
 ## 0.7.3
 * Don't colorize stdout by default
 * Deactivate rocket for common system commands
 
-
 ## 0.7.2
 * Fix a small bug that happens if there was no last line
 
-
 ## 0.7.1
 * Deactivate buggy input coloring :/
-
 
 ## 0.7.0
 * Use paint gem for terminal colors
 * Fix some rocket issues (when using with colored content)
 
-
 ## 0.6.5
 * Windows support
-
 
 ## < 0.6.5
 See https://github.com/janlelis/fancy_irb/commits/0.6.4
