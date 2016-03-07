@@ -1,13 +1,19 @@
-sudo: false
 language: ruby
+sudo: false
 
 rvm:
+- ruby-head
+- 2.3.0
 - 2.2
 - 2.1
 - 2.0
+- 1.9.3
 - rbx-2
 - jruby-head
-- jruby-9000
+- jruby-9.0.5.0
 
-cache:
-- bundler
+matrix:
+  allow_failures:
+    - rvm: 1.9.3
+    - rvm: 2.0
+
