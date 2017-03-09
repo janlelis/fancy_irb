@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.3'
   s.license = 'MIT'
   s.requirements = ['Windows: ansicon <https://github.com/adoxa/ansicon>']
-  s.add_dependency 'paint', '>= 0.9', '< 2.0'
+  s.add_dependency 'paint', '>= 0.9', '< 3.0'
   s.add_dependency 'unicode-display_width', "~> 1.0"
   s.add_development_dependency 'rspec', "~> 3.2"
   s.add_development_dependency 'rake', "~> 10.4"
@@ -37,4 +37,3 @@ Gem::Specification.new do |s|
     "spec/fixtures.rb",
   ]
 end
-

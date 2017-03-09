@@ -2,6 +2,7 @@
 
 ## 1.1.0
 * Rename `east_asian_width` option to `unicode_display_width` and activate by default
+* Relax paint dependency
 
 ## 1.0.2
 * Bump unicode-display_width to 1.0
