@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.2.0 (unreleased)
+* Read indentation level directly so it won't fail on newer Rubies
+
 ## 1.1.0
 * Rename `east_asian_width` option to `unicode_display_width` and activate by default
 * Relax paint dependency
