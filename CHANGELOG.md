@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.2.0 (unreleased)
+## 1.2.0
 * Read indentation level directly so it won't fail on newer Rubies
 
 ## 1.1.0
