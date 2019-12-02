@@ -1,4 +1,4 @@
-# FancyIrb [![version](https://badge.fury.io/rb/fancy_irb.svg)](http://badge.fury.io/rb/fancy_irb)
+# FancyIrb [![version](https://badge.fury.io/rb/fancy_irb.svg)](https://badge.fury.io/rb/fancy_irb)
 
 *   Colorizes IRB prompts, errors, `$stderr` and `$stdout`
 *   Uses "Hash Rockets" (# =>) to display IRB results
@@ -32,8 +32,7 @@ Rocket mode means: Output result as comment if there is enough space left on
 the terminal line and `stdout` does not output more than the current terminal
 height.
 
-For more information on which colors can be used, see the [paint
-documentation](https://github.com/janlelis/paint).
+For more information on which colors can be used, see the [paint documentation](https://github.com/janlelis/paint).
 
 
 ## Troubleshooting
@@ -53,5 +52,5 @@ focuses on the often used ones
 ## J-_-L
 Inspired by the irb_rocket gem by genki.
 
-Copyright (c) 2010-2012, 2015-2017 Jan Lelis <http://janlelis.com> released under
+Copyright (c) 2010-2012, 2015-2019 Jan Lelis <https://janlelis.com> released under
 the MIT license.
