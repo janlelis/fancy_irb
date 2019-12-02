@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.2.1 (unreleased)
+## 1.2.1
 * Fix 2.7 keyword warning
 
 ## 1.2.0
