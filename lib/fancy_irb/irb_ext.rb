@@ -27,8 +27,8 @@ module IRB
   class Context
     alias evaluate_non_fancy evaluate
 
-    def evaluate(*args)
-      evaluate_non_fancy(*args)
+    def evaluate(*args, **kwargs)
+      evaluate_non_fancy(*args, **kwargs)
     rescue Exception
       FancyIrb.register_error_capturer!
       raise

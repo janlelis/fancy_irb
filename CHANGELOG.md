@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.2.1 (unreleased)
+* Fix 2.7 keyword warning
+
 ## 1.2.0
 * Read indentation level directly so it won't fail on newer Rubies
 
