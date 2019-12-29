@@ -6,10 +6,10 @@ Gem::Specification.new do |s|
   s.name        = "fancy_irb"
   s.version     = FancyIrb::VERSION
   s.authors     = ["Jan Lelis"]
-  s.email       = "mail@janlelis.de"
-  s.homepage    = "http://github.com/janlelis/fancy_irb"
-  s.summary     = "FancyIrb makes IRB friendly."
-  s.description = "FancyIrb makes IRB # => friendly."
+  s.email       = ["hi@ruby.consulting"]
+  s.homepage    = "https://github.com/janlelis/fancy_irb"
+  s.summary     = "FancyIrb makes IRB # => friendly."
+  s.description = "A fancy IRB has a colorful input prompt and profiles rocket-style #=> return values"
   s.required_ruby_version = '>= 1.9.3'
   s.license = 'MIT'
   s.requirements = ['Windows: ansicon <https://github.com/adoxa/ansicon>']
