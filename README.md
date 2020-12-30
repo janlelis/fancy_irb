@@ -1,8 +1,7 @@
-# FancyIrb [![version](https://badge.fury.io/rb/fancy_irb.svg)](https://badge.fury.io/rb/fancy_irb)
+# FancyIrb [![version](https://badge.fury.io/rb/fancy_irb.svg)](https://badge.fury.io/rb/fancy_irb)  [![[ci]](https://github.com/janlelis/fancy_irb/workflows/Test/badge.svg)](https://github.com/janlelis/fancy_irb/actions?query=workflow%3ATest)
 
 *   Colorizes IRB prompts, errors, `$stderr` and `$stdout`
 *   Uses "Hash Rockets" (# =>) to display IRB results
-
 
 ## Usage
 
@@ -34,7 +33,6 @@ height.
 
 For more information on which colors can be used, see the [paint documentation](https://github.com/janlelis/paint).
 
-
 ## Troubleshooting
 ### Windows Support
 You will need [ansicon](https://github.com/adoxa/ansicon) or [ConEmu](https://code.google.com/p/conemu-maximus5/).
@@ -47,7 +45,6 @@ lookup of every character. You can deactivate this check by setting
 ### Known Bugs
 Not all stdin methods are patched properly to work with the rocket: The gems
 focuses on the often used ones
-
 
 ## J-_-L
 Inspired by the irb_rocket gem by genki.
