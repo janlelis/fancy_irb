@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.3.0 (unreleased)
+* Use `script` wrapper on linux in case we are not on a tty
+
 ## 1.2.1
 * Fix 2.7 keyword warning
 

@@ -17,6 +17,13 @@ module FancyIrb
         :cuu1 => "\e[1A",
         :cuf1 => "\e[1C",
       }
+    elsif RbConfig::CONFIG['host_os'] =~ /linux/
+      TPUT = {
+        :sc   => `script -q -e -t /dev/null -c 'tput sc'`,
+        :rc   => `script -q -e -t /dev/null -c 'tput rc'`,
+        :cuu1 => `script -q -e -t /dev/null -c 'tput cuu1'`,
+        :cuf1 => `script -q -e -t /dev/null -c 'tput cuf1'`,
+      }
     else
       TPUT = {
         :sc   => `tput sc`,
