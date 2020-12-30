@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.3.0 (unreleased)
+## 1.3.0
 * Use `script` wrapper on linux in case we are not on a tty
 
 ## 1.2.1
