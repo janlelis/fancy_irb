@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.4.0 (unreleased)
+## 1.4.0
 * Full support for non-ttys
 
 ## 1.3.0
