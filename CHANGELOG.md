@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.4.0 (unreleased)
+* Full support for non-ttys
+
 ## 1.3.0
 * Use `script` wrapper on linux in case we are not on a tty
 
