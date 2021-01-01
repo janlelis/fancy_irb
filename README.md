@@ -49,5 +49,5 @@ focuses on the often used ones
 ## J-_-L
 Inspired by the irb_rocket gem by genki.
 
-Copyright (c) 2010-2012, 2015-2020 Jan Lelis <https://janlelis.com> released under
+Copyright (c) 2010-2012, 2015-2021 Jan Lelis <https://janlelis.com> released under
 the MIT license.
