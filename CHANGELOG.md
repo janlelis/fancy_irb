@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.4.1
+* Relax unicode-display_width requirement
+
 ## 1.4.0
 * Full support for non-ttys
 
