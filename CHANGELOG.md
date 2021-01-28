@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.4.2 (unreleased)
+* Support Alpine Linux (fix #12)
+
 ## 1.4.1
 * Relax unicode-display_width requirement
 
