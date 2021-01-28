@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.4.2 (unreleased)
+## 1.4.2
 * Support Alpine Linux (fix #12)
 
 ## 1.4.1
