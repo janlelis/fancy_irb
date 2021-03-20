@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.4.3 (unreleased)
+## 1.4.3
 * Fix options given to `script` so it doesn't output timing info
 
 ## 1.4.2
