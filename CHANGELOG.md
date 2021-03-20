@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.4.3 (unreleased)
+* Fix options given to `script` so it doesn't output timing info
+
 ## 1.4.2
 * Support Alpine Linux (fix #12)
 

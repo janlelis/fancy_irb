@@ -24,10 +24,10 @@ module FancyIrb
         }
       elsif RbConfig::CONFIG['host_os'] =~ /linux(?!-musl)/
         TPUT = {
-          :sc   => `script -q -e -t /dev/null -c 'tput sc'`,
-          :rc   => `script -q -e -t /dev/null -c 'tput rc'`,
-          :cuu1 => `script -q -e -t /dev/null -c 'tput cuu1'`,
-          :cuf1 => `script -q -e -t /dev/null -c 'tput cuf1'`,
+          :sc   => `script -q -e /dev/null -c 'tput sc'`,
+          :rc   => `script -q -e /dev/null -c 'tput rc'`,
+          :cuu1 => `script -q -e /dev/null -c 'tput cuu1'`,
+          :cuf1 => `script -q -e /dev/null -c 'tput cuf1'`,
         }
       else
         TPUT = {
