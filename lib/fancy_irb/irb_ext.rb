@@ -5,11 +5,11 @@ module IRB
     end
 
     alias prompt_non_fancy prompt
-    def prompt(*args, &block)
+    def prompt(prompt_arg, ltype, indent, line_no)
       FancyIrb.handle_prompt(
-        prompt_non_fancy(*args, &block),
-        IRB.conf[:AUTO_INDENT] ? @scanner.instance_variable_get(:@indent) * 2 : 0,
-        IRB.conf[:AUTO_INDENT] && IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C] == args[0]
+        prompt_non_fancy(prompt_arg, ltype, indent, line_no),
+        IRB.conf[:AUTO_INDENT] ? indent * 2 : 0,
+        IRB.conf[:AUTO_INDENT] && IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C] == prompt_arg
       )
     end
 

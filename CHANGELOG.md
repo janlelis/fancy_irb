@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## 2.0.0 (unreleased)
+* Fix core functionality for newer IRB
 * Require Ruby 3.x / IRB 1.7+
 * Bump display-width gem to latest version
     * Remove option to disable display-width check, since it now has good performance

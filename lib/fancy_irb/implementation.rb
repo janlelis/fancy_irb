@@ -79,14 +79,11 @@ module FancyIrb
       end
     end
 
-    def output_value(context, scanner)
-      show_output(context.inspect_last_value, scanner)
-    end
-
-    def show_output(output, scanner)
+    def output_value(context, _scanner)
+      output = context.inspect_last_value
       if @options[:rocket_mode] && !@skip_next_rocket && !output.include?("\n")
-        offset = get_offset_from_irb_scanner(scanner)
-        cols_to_show  = get_cols_to_show_from_output_and_offset(output, offset)
+        offset = get_offset_from_reline
+        cols_to_show  = offset + width_of(@options[:rocket_prompt] + output)
         lines_to_show = 1 + @tracked_height
 
         if TerminalInfo.lines > lines_to_show && TerminalInfo.cols > cols_to_show
@@ -105,13 +102,10 @@ module FancyIrb
       puts colorize(@options[:result_prompt], :result_prompt) + output
     end
 
-    def get_offset_from_irb_scanner(irb_scanner)
-      last_line = irb_scanner.instance_variable_get(:@line).split("\n").last
+    def get_offset_from_reline
+      last_buffer = (Reline::HISTORY || [])[-1] || ""
+      last_line = last_buffer.split("\n").last
       1 + @current_indent + width_of(last_line)
-    end
-
-    def get_cols_to_show_from_output_and_offset(output, offset)
-      offset + width_of(@options[:rocket_prompt] + output)
     end
 
     # TODO testing and improving, e.g. getc does not contain "\n"
