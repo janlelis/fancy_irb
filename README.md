@@ -3,6 +3,10 @@
 *   Colorizes IRB prompts, errors, `$stderr` and `$stdout`
 *   Uses "Hash Rockets" (# =>) to display IRB results
 
+## Version 2.0 for Modern IRB
+
+Please note: Version 2.0 of this gem requires Ruby 3 and IRB 1.7+
+
 ## Usage
 
     require 'fancy_irb'
@@ -49,5 +53,5 @@ focuses on the often used ones
 ## J-_-L
 Inspired by the irb_rocket gem by genki.
 
-Copyright (c) 2010-2012, 2015-2021 Jan Lelis <https://janlelis.com> released under
+Copyright (c) 2010-2012, 2015-2023 Jan Lelis <https://janlelis.com> released under
 the MIT license.

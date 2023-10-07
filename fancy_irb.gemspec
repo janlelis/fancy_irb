@@ -10,10 +10,11 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/janlelis/fancy_irb"
   s.summary     = "FancyIrb makes IRB # => friendly."
   s.description = "A fancy IRB has a colorful input prompt and profiles rocket-style #=> return values"
-  s.required_ruby_version = '>= 1.9.3'
+  s.required_ruby_version = '>= 3.0'
   s.license = 'MIT'
   s.requirements = ['Windows: ansicon <https://github.com/adoxa/ansicon>']
   s.add_dependency 'paint', '>= 0.9', '< 3.0'
+  s.add_dependency 'irb', ">= 1.7"
   s.add_dependency 'unicode-display_width', ">= 1.1"
   s.add_development_dependency 'rspec', "~> 3.2"
   s.add_development_dependency 'rake', "~> 13.0"
