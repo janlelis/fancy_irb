@@ -8,8 +8,8 @@ module IRB
     def prompt(prompt_arg, ltype, indent, line_no)
       FancyIrb.handle_prompt(
         prompt_non_fancy(prompt_arg, ltype, indent, line_no),
-        IRB.conf[:AUTO_INDENT] ? indent * 2 : 0,
-        IRB.conf[:AUTO_INDENT] && IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C] == prompt_arg
+        IRB.conf[:AUTO_INDENT] ? indent * 2 : 0
+        # IRB.conf[:AUTO_INDENT] && IRB.conf[:PROMPT][IRB.conf[:PROMPT_MODE]][:PROMPT_C] == prompt_arg
       )
     end
 

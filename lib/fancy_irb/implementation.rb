@@ -55,9 +55,9 @@ module FancyIrb
       @tracked_indent = 0
     end
 
-    def handle_prompt(prompt, scanner_indent, track_indent)
-      @tracked_indent = 2 if track_indent
-      @current_indent = width_of(prompt) + scanner_indent + @tracked_indent
+    def handle_prompt(prompt, scanner_indent)#, track_indent)
+      # @tracked_indent = 2 if track_indent
+      @current_indent = width_of(prompt) + scanner_indent# + @tracked_indent
 
       append_input_color colorize(prompt, :input_prompt)
     end
