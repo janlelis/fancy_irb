@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.requirements = ['Windows: ansicon <https://github.com/adoxa/ansicon>']
   s.add_dependency 'paint', '>= 0.9', '< 3.0'
   s.add_dependency 'irb', ">= 1.7"
-  s.add_dependency 'unicode-display_width', ">= 1.1"
+  s.add_dependency 'unicode-display_width', ">= 2.5"
   s.add_development_dependency 'rspec', "~> 3.2"
   s.add_development_dependency 'rake', "~> 13.0"
   s.files = [

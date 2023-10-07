@@ -4,10 +4,6 @@ require_relative 'fixtures'
 describe FancyIrb::SizeDetector do
   include FancyIrb::SizeDetector
 
-  before do
-    FancyIrb.instance_variable_set(:@options, { unicode_display_width: true })
-  end
-
   describe ".width_of" do
     it "returns 0 when no data given" do
       expect( width_of(nil) ).to eq 0
@@ -23,16 +19,6 @@ describe FancyIrb::SizeDetector do
 
     it "respects double-width chars by default" do
       expect( width_of('一') ).to eq 2
-    end
-
-    context "unicode_display_width? false" do
-      before do
-        FancyIrb.instance_variable_set(:@options, { unicode_display_width: false })
-      end
-
-      it "does not respect double-width chars" do
-        expect( width_of('一') ).to eq 1
-      end
     end
   end
 

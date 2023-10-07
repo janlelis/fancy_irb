@@ -50,11 +50,6 @@ module FancyIrb
       }
     end
 
-    def unicode_display_width?
-      @options[:unicode_display_width] || @options[:east_asian_width]
-    end
-    alias east_asian_width? unicode_display_width?
-
     def reset_line!
       @tracked_height = 0
       @tracked_indent = 0

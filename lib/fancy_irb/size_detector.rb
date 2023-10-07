@@ -3,9 +3,7 @@ module FancyIrb
     extend self
 
     def width_of(data)
-      return 0 unless data
-      data = Paint.unpaint data.to_s
-      FancyIrb.unicode_display_width? ? Unicode::DisplayWidth.of(data) : data.length
+      Unicode::DisplayWidth.of(Paint.unpaint(data.to_s))
     end
 
     def height_of(data, width)
