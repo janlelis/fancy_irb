@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2.1.0 (unreleased)
+* Refactor IRB extension to accommodate IRB 1.8.2
+
 ## 2.0.0
 * Fix core functionality for newer IRB
 * Require Ruby 3.x / IRB 1.7+
