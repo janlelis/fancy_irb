@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 2.1.0 (unreleased)
+## 2.1.0
 * Refactor IRB extension to accommodate IRB 1.8.2
 
 ## 2.0.0
