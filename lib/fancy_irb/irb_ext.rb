@@ -1,6 +1,6 @@
 module FancyIrb
   module IrbExtCommon
-    def output_value
+    def output_value(_omit = false)
       FancyIrb.output_value(@context, @scanner)
     end
 

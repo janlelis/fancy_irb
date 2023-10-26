@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2.1.1
+* Fix assignments (IRB ref: https://github.com/ruby/irb/commit/c5ea79d5cecea9cae6ad0c1f31703a98cd329431)
+
 ## 2.1.0
 * Refactor IRB extension to accommodate IRB 1.8.2
 
