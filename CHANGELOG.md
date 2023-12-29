@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 2.1.2 (unreleased)
+## 2.1.2
 * Proper check for IRB version, fixes rocket not used
 
 ## 2.1.1
