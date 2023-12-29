@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2.1.2 (unreleased)
+* Proper check for IRB version, fixes rocket not used
+
 ## 2.1.1
 * Fix assignments (IRB ref: https://github.com/ruby/irb/commit/c5ea79d5cecea9cae6ad0c1f31703a98cd329431)
 

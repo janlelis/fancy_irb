@@ -48,7 +48,7 @@ module IRB
   class Irb
     prepend FancyIrb::IrbExtCommon
 
-    if IRB::VERSION < "1.8.2"
+    if Gem::Version.new(IRB::VERSION) < Gem::Version.new("1.8.2")
       prepend FancyIrb::IrbExtPromptLegacy
     else
       prepend FancyIrb::IrbExtPrompt
