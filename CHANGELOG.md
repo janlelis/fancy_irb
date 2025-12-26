@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next
+## 2.1.3
 * Allow Ruby 4.0
 
 ## 2.1.2

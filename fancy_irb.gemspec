@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/janlelis/fancy_irb"
   s.summary     = "Colors and rockets in IRB"
   s.description = "A fancy IRB has rocket-style #=> return values and colorful prompts and streams."
-  s.required_ruby_version = '>= 3.0'
+  s.required_ruby_version = '>= 3.0', '< 5.0'
   s.metadata = { "rubygems_mfa_required" => "true" }
   s.license = 'MIT'
   s.add_dependency 'paint', '>= 0.9', '< 3.0'
