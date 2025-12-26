@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Next
+* Allow Ruby 4.0
+
 ## 2.1.2
 * Proper check for IRB version, fixes rocket not used
 
